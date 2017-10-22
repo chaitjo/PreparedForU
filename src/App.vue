@@ -4,33 +4,10 @@
       <h1>PreparedForU</h1>
     </div>
 
-<!--     <div class="container">
-      <div v-for="entry in entries" class="card text-center" style="margin:30px;">
-          <div class="card-header">
-            Journal Entry
-          </div>
-          <div class="card-body">
-            <h4 class="card-title">{{entry.title}}</h4>
-            <p class="card-text">{{entry.content}}</p>
-          </div>
-          <div class="card-footer text-muted">
-            {{entry.date}}
-          </div>
-      </div>
-    </div> -->
-
     <div class="container">
-      <div v-for="entry in reversedHalls" class="card text-center" style="margin:30px;">
-          <div class="card-header">
-            Hall of Residence
-          </div>
-          <div class="card-body">
-            <h4 class="card-title">{{entry.HallName}}</h4>
-            <p class="card-text">{{entry.SingleRoomRent}}</p>
-            <p class="card-text">{{entry.DoubleRoomRent}}</p>
-          </div>
-          <div class="card-footer text-muted">
-            {{entry.University}}
+      <div v-for="entry in Halls" v-if="entry.University=='Nanyang Technological University'">
+          <div class="col-md-4 col-md-offset-4">
+            <a href="" class="btn btn-block btn-default">{{entry.HallName}}</a>
           </div>
       </div>
     </div>
@@ -55,12 +32,14 @@ let config = {
 let app = Firebase.initializeApp(config)
 let db = app.database()
 
-let entryRef = db.ref('Halls')
+let UniversitiesRef = db.ref('1/Universities')
+let HallsRef = db.ref('2/Halls')
 
 export default {
   name: 'app',
   firebase: {
-    Halls: entryRef
+    Universities: UniversitiesRef,
+    Halls: HallsRef
   },
   computed: {
     reversedHalls: function () {
