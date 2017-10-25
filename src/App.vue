@@ -1,26 +1,41 @@
 <template>
   <div id="app">
-    <div class="jumbotron">
+    <div style="text-align:center; font-family:'Lato';">
       <h1>PreparedForU</h1>
     </div>
 
     <div class="col-md-8 col-md-offset-2">
-      <h3 class="card-title" style="text-align:center; font-family:'Lato';">New Entry</h3>
-      <form id="form" v-on:submit.prevent="addEntry">
-        <div class="form-group" style="margin-top:20px;">
-          <label for="entryName">Name:</label>
-          <textarea type="text" id="entryName" class="form-control" v-model="newEntry.Name" ></textarea>
+      <h3 class="card-title" style="text-align:center; font-family:'Lato';">New Profile</h3>
+      <form id="form" v-on:submit.prevent="addProfile">
+        <div class="form-group">
+          <div v-for="university in Universities">
+            <input type="radio" :id="university.Name" :value="university.Name" v-model="newProfile.University">
+            <label :for="university.Name">{{university.Name}}</label>
+          </div>
         </div>
-        <input type="submit" class="btn btn-primary" value="Add Entry">
+        <hr>
+        <div class="form-group">
+          <div v-for="hall in Halls" v-if="hall.University==newProfile.University">
+            <input type="radio" :id="hall.HallName" :value="hall.HallName" v-model="newProfile.Hall">
+            <label :for="hall.HallName">{{hall.HallName}}</label>
+          </div>
+        </div>
+        <hr>
+        <input type="submit" class="btn btn-primary" v-on:click="addProfile" value="Add Profile">
       </form>
     </div>
 
     <div class="container">
-      <div v-for="entry in Universities">
+      <div v-for="entry in Profiles">
           <div class="col-md-4 col-md-offset-4">
-            <a href="" class="btn btn-block btn-default"> <button v-on:click="removeEntry(entry)" >{{entry.Name}}</button></a>
+            <button class="btn btn-default" v-on:click="removeProfile(entry)" >{{entry.University}},{{entry.Hall}}</button>
           </div>
       </div>
+    </div>
+
+    <div>
+      {{newProfile.University}}
+      {{newProfile.Hall}}
     </div>
 
   </div>
@@ -43,32 +58,35 @@ let config = {
 let app = Firebase.initializeApp(config)
 let db = app.database()
 
-let UniversitiesRef = db.ref('1/Universities')
-let HallsRef = db.ref('2/Halls')
+let ProfilesRef = db.ref('1/Profiles')
+let UniversitiesRef = db.ref('2/Universities')
+let HallsRef = db.ref('3/Halls')
 
 export default {
   name: 'app',
-  firebase: {
-    Universities: UniversitiesRef,
-    Halls: HallsRef
-  },
+  
 
   data () {
     return {
-      newEntry: {
-          Name : ''
+      u: '',
+      h: '',
+      newProfile: {
+          University : '',
+          Hall : ''
       }
     }
   },
 
   methods: {
-    addEntry: function () {
-      UniversitiesRef.push(this.newEntry)
-      this.newEntry.Name = ''
+    addProfile: function () {
+      ProfilesRef.push(this.newProfile)
+      this.newProfile.University = '';
+      this.newProfile.Hall = '';
+      console.log('New Entry added')
       location.reload()
     },
-    removeEntry: function (entry) {
-      UniversitiesRef.child(entry['.key']).remove()
+    removeProfile: function (entry) {
+      ProfilesRef.child(entry['.key']).remove()
     }
   },
 
@@ -79,7 +97,12 @@ export default {
   },
   components: {
 
-  }
+  },
+  firebase: {
+    Universities: UniversitiesRef,
+    Halls: HallsRef,
+    Profiles: ProfilesRef
+  },
 }
 
 
@@ -87,16 +110,4 @@ export default {
 
 
 <style>
-
-.jumbotron{
-  text-align: center;
-  background-color: white;
-
-}
-.jumbotron h1{
-  font-family: 'Lato';
-  font-weight: 300;
-}
-
-
 </style>
