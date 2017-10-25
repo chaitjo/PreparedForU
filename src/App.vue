@@ -28,27 +28,22 @@
           </div>
         </div>
         <hr>
-        <input type="submit" class="btn btn-primary" v-on:click="addProfile" value="Add Profile">
+        <input type="submit" class="btn btn-primary" v-on:click="createChart('day', computedValue[0]); createChart('week', computedValue[1]); createChart('month', computedValue[2]); createChart('year', computedValue[3])" value="Add Profile">
       </form>
     </div>
-
-    <hr>
-
-    <!-- <div class="container">
-      <div v-for="entry in Profiles">
-          <div class="col-md-4 col-md-offset-4">
-            <button class="btn btn-default" v-on:click="removeProfile(entry)" >{{entry.University}},{{entry.Hall}},{{entry.Food}}</button>
-          </div>
-      </div>
-    </div> -->
-
     <div class="col-md-12 text-center">
-<!--       {{newProfile.University}}
-      {{newProfile.Hall}}
-      {{newProfile.Food}} -->
+      <hr>
       {{computedValue}}
     </div>
-
+    <div v-if="show==true" class="col-md-12 text-center" >
+      <div id="day" style="height: 500px; width: 100%;"></div>
+      <hr>
+      <div id="week" style="height: 500px; width: 100%;"></div>
+      <hr>
+      <div id="month" style="height: 500px; width: 100%;"></div>
+      <hr>
+      <div id="year" style="height: 500px; width: 100%;"></div>
+    </div>
   </div>
 </template>
 
@@ -84,6 +79,7 @@ export default {
           Hall : null,
           Food : null
       },
+      show: true
     }
   },
 
@@ -97,6 +93,27 @@ export default {
     },
     removeProfile: function (entry) {
       ProfilesRef.child(entry['.key']).remove()
+    },
+    createChart: function (id, plotData) {
+      var chart = new CanvasJS.Chart(id, {
+        animationEnabled: true,
+        title:{
+          text: "",
+          horizontalAlign: "center"
+        },
+        data: [{
+          type: "doughnut",
+          startAngle: 60,
+          //innerRadius: 60,
+          indexLabelFontSize: 17,
+          indexLabel: "{label} - {y}",
+          toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+          dataPoints: plotData
+        }]
+      });
+      console.log(plotData)
+      this.show=true;
+      chart.render();
     }
   },
 
@@ -108,10 +125,12 @@ export default {
       let u = (this.newProfile.University == null) ? 0 : this.newProfile.University.Fee;
       let h = (this.newProfile.Hall == null) ? 0 : this.newProfile.Hall.Rent;
       let f = (this.newProfile.Food == null) ? 0 : this.newProfile.Food.Price;
-      let day = [u/365, h/30, f];
-      let week = [u/56, h/4, f*7]
-      let month = [u/12, h, f*30];
-      let year = [u, h*12, f*56];
+      
+      let day = [{y: u/365, label: "Tuition"}, {y: h/30, label: "Hostel"}, {y: f, label: "Food"}];  
+      let week = [{y: u/56, label: "Tuition"}, {y: h/4.5, label: "Hostel"}, {y: f*7, label: "Food"}];
+      let month = [{y: u/12, label: "Tuition"}, {y: h, label: "Hostel"}, {y: f*30, label: "Food"}];
+      let year = [{y: u, label: "Tuition"}, {y: h*12, label: "Hostel"}, {y: f*365, label: "Food"}];
+      
       return [day, week, month, year];
     }
   },
@@ -125,6 +144,8 @@ export default {
     Foods: FoodsRef
   },
 }
+
+
 </script>
 
 
