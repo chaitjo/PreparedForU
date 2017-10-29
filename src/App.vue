@@ -1,49 +1,180 @@
 <template>
   <div id="app">
-    <div style="text-align:center; font-family:'Lato';">
+    <div style="text-align:center;">
       <h1>PreparedForU</h1>
     </div>
 
     <div class="col-md-8 col-md-offset-2">
-      <h3 class="card-title" style="text-align:center; font-family:'Lato';">New Profile</h3>
+      <h3 style="text-align:center;">New Profile</h3>
       <form id="form" v-on:submit.prevent="addProfile">
+        
         <div class="form-group">
-          <div v-for="university in Universities">
-            <input type="radio" :id="university.Name" :value="university" v-model="newProfile.University">
-            <label :for="university.Name">{{university.Name}}</label>
+          <div>
+            <h4>Select your university</h4>
           </div>
-        </div>
-        <hr>
-        <div class="form-group">
-          <div v-for="hall in Halls" v-if="hall.University==newProfile.University.Name">
-            <input type="radio" :id="hall.Name" :value="hall" v-model="newProfile.Hall">
-            <label :for="hall.Name">{{hall.Name}}</label>
+          <div v-for="university in universities">
+            <input type="radio" :id="university.fullName" :value="university.value" v-model="newProfile.university">
+            <label :for="university.fullName">{{university.fullName}}</label>
           </div>
+          <hr>
         </div>
-        <hr>
-        <div class="form-group">
-          <div v-for="food in Foods" v-if="food.University==newProfile.University.Name">
-            <input type="radio" :id="food.Type" :value="food" v-model="newProfile.Food">
-            <label :for="food.Type">{{food.Type}}</label>
+
+        <div class="form-group" v-if="newProfile.university">
+          <div>
+            <h4>What is your citizenship status?</h4>
           </div>
+          <div v-for="citizenship in citizenships">
+            <input type="radio" :id="citizenship.citizenship" :value="citizenship.value" v-model="newProfile.citizenship">
+            <label :for="citizenship.citizenship">{{citizenship.citizenship}}</label>
+          </div>
+          <hr>
         </div>
-        <hr>
-        <input type="submit" class="btn btn-primary" v-on:click="createChart('day', computedValue[0]); createChart('week', computedValue[1]); createChart('month', computedValue[2]); createChart('year', computedValue[3])" value="Add Profile">
+
+        <div class="form-group" v-if="newProfile.citizenship">
+          <div>
+            <h4>Select your course</h4>
+          </div>
+          <div v-for="course in courses" v-if="course.university==newProfile.university && course.citizenship==newProfile.citizenship">
+            <input type="radio" :id="course.course" :value="course" v-model="newProfile.course">
+            <label :for="course.course">{{course.course}}</label>
+          </div>
+          <hr>
+        </div>
+
+        <div class="form-group" v-if="newProfile.university">
+          <div>
+            <h4>Will you be staying in on-campus housing?</h4>
+          </div>
+          <div>
+            <input type="radio" id="Yes" value="true" v-model="newProfile.stayingOnCampus">
+            <label for="Yes">Yes</label>
+            <input type="radio" id="No" value="false" v-model="newProfile.stayingOnCampus">
+            <label for="No">No</label>
+          </div>
+          <hr>
+        </div>
+
+        <div class="form-group" v-if="newProfile.stayingOnCampus=='true'">
+          <div>
+            <h4>Will you usually be living on-campus during weekends as well?</h4>
+          </div>
+          <div>
+            <input type="radio" id="Yes" value="true" v-model="newProfile.stayingOnCampusWeekends">
+            <label for="Yes">Yes</label>
+            <input type="radio" id="No" value="false" v-model="newProfile.stayingOnCampusWeekends">
+            <label for="No">No</label>
+          </div>
+          <hr>
+        </div>
+
+        <div class="form-group" v-if="newProfile.stayingOnCampus=='true'">
+          <div>
+            <h4>Select your room type</h4>
+          </div>
+          <div>
+            <input type="radio" id="Single" value="Single" v-model="newProfile.roomOccupancy">
+            <label for="Single">Single Occupancy</label>
+            <input type="radio" id="Double" value="Double" v-model="newProfile.roomOccupancy">
+            <label for="Double">Double Occupancy</label>
+          </div>
+          <hr>
+        </div>
+
+        <div class="form-group" v-if="newProfile.roomOccupancy">
+          <div>
+            <h4>Will your room be equiped with an air conditioner</h4>
+          </div>
+          <div>
+            <input type="radio" id="Yes" value="Yes" v-model="newProfile.roomAirCon">
+            <label for="Yes">Yes</label>
+            <input type="radio" id="No" value="No" v-model="newProfile.roomAirCon">
+            <label for="No">No</label>
+          </div>
+          <hr>
+        </div>
+
+        <div class="form-group" v-if="newProfile.roomOccupancy">
+          <div>
+            <h4>Select your hall</h4>
+          </div>
+          <div v-for="hall in halls" v-if="hall.university==newProfile.university && newProfile.roomOccupancy==hall.occupancy && newProfile.roomAirCon==hall.airCon">
+            <input type="radio" :id="hall.hall" :value="hall" v-model="newProfile.hall">
+            <label :for="hall.hall">{{hall.hall}}</label>
+          </div>
+          <hr>
+        </div>
+
+        <div class="form-group" v-if="newProfile.stayingOnCampus=='false' || newProfile.stayingOnCampusWeekends=='false'">
+          <div>
+            <h4>Set your home location</h4>
+          </div>
+          <div>
+            <input type="text" id="home" placeholder="Enter Postal Code" v-model="newProfile.home">
+          </div>
+          <hr>
+        </div>
+
+        <div class="form-group" v-if="newProfile.home">
+          <div>
+            <h4>What will be your usual mode of transport from home?</h4>
+          </div>
+          <div>
+            <input type="radio" id="public" value="public" v-model="newProfile.transport">
+            <label for="public">Public Transport</label>
+            <input type="radio" id="taxi" value="taxi" v-model="newProfile.transport">
+            <label for="taxi">Taxi</label>
+            <input type="radio" id="personal" value="personal" v-model="newProfile.transport">
+            <label for="personal">Personal Vehicle</label>
+          </div>
+          <hr>
+        </div>
+        
+        <div class="form-group" v-if="newProfile.university">
+          <div>
+            <h4>Select your dietary preference</h4>
+          </div>
+          <div v-for="meal in meals" v-if="meal.university==newProfile.university">
+            <input type="radio" :id="meal.diet" :value="meal" v-model="newProfile.meal">
+            <label :for="meal.diet">{{meal.diet}}</label>
+          </div>
+          <hr>
+        </div>
+
+        <div class="form-group" v-if="newProfile.home">
+          <div>
+            <h4>Will you usually be having breakfast/dinner on campus or at home?</h4>
+          </div>
+          <div>
+            <input type="radio" id="campus" value="false" v-model="newProfile.foodAtHome">
+            <label for="campus">On campus</label>
+            <input type="radio" id="home" value="true" v-model="newProfile.foodAtHome">
+            <label for="nonveg">At home</label>
+          </div>
+          <hr>
+        </div>
+        
+        <input type="submit" class="btn btn-primary" v-on:click="createChart('daily', financialBreakdown[0]); createChart('weekly', financialBreakdown[1]); createChart('monthly', financialBreakdown[2]); createChart('semesterly', financialBreakdown[3])" value="Add Profile">
+      
       </form>
     </div>
+
+    <div class="col-md-12 text-center" style="margin-top: 50px;">
+      {{newProfile}}
+      <hr>
+      {{financialBreakdown}}
+      }
+    </div>
+    
     <div class="col-md-12 text-center">
+      <div id="daily" style="height: 500px; width: 100%;"></div>
       <hr>
-      {{computedValue}}
+      <div id="weekly" style="height: 500px; width: 100%;"></div>
+      <hr>
+      <div id="monthly" style="height: 500px; width: 100%;"></div>
+      <hr>
+      <div id="semesterly" style="height: 500px; width: 100%;"></div>
     </div>
-    <div v-if="show==true" class="col-md-12 text-center" >
-      <div id="day" style="height: 500px; width: 100%;"></div>
-      <hr>
-      <div id="week" style="height: 500px; width: 100%;"></div>
-      <hr>
-      <div id="month" style="height: 500px; width: 100%;"></div>
-      <hr>
-      <div id="year" style="height: 500px; width: 100%;"></div>
-    </div>
+
   </div>
 </template>
 
@@ -64,10 +195,12 @@ let config = {
 let app = Firebase.initializeApp(config)
 let db = app.database()
 
-let ProfilesRef = db.ref('Profiles')
-let UniversitiesRef = db.ref('Universities')
-let HallsRef = db.ref('Halls')
-let FoodsRef = db.ref('Foods')
+let profilesRef = db.ref('profiles')
+let universitiesRef = db.ref('universities')
+let citizenshipsRef = db.ref('citizenships')
+let coursesRef = db.ref('courses')
+let hallsRef = db.ref('halls')
+let mealsRef = db.ref('meals')
 
 export default {
   name: 'app',
@@ -75,24 +208,32 @@ export default {
   data () {
     return {
       newProfile: {
-          University : null,
-          Hall : null,
-          Food : null
+          university : null,
+          citizenship : null,
+          course : null,
+          stayingOnCampus : null,
+          stayingOnCampusWeekends : null,
+          roomOccupancy : null,
+          roomAirCon : null,
+          hall : null,
+          home : null,
+          meal : null,
+          foodAtHome : null
       },
-      show: true
     }
   },
 
   methods: {
     addProfile: function () {
-      //ProfilesRef.push(this.newProfile)
-      this.newProfile.University = null;
-      this.newProfile.Hall = null;
-      this.newProfile.Food = null;
+      //profilesRef.push(this.newProfile)
+      this.newProfile.university = null;
+      this.newProfile.hall = null;
+      this.newProfile.meal = null;
       console.log('New Entry added')
+      //location.reload()
     },
     removeProfile: function (entry) {
-      ProfilesRef.child(entry['.key']).remove()
+      profilesRef.child(entry['.key']).remove()
     },
     createChart: function (id, plotData) {
       var chart = new CanvasJS.Chart(id, {
@@ -112,39 +253,146 @@ export default {
         }]
       });
       console.log(plotData)
-      this.show=true;
       chart.render();
     }
   },
 
   computed: {
-    reversedHalls: function () {
-      return this.Halls.reverse()
-    },
-    computedValue: function() {
-      let u = (this.newProfile.University == null) ? 0 : this.newProfile.University.Fee;
-      let h = (this.newProfile.Hall == null) ? 0 : this.newProfile.Hall.Rent;
-      let f = (this.newProfile.Food == null) ? 0 : this.newProfile.Food.Price;
+    financialBreakdown: function() {
+      let tuitionFee = (this.newProfile.course==null) ? 0 : parseFloat(this.newProfile.course.fee);
+      let hallRent = (this.newProfile.hall==null) ? 0 : this.newProfile.hall.rent;
+      let breakfastCost = (this.newProfile.meal==null) ? 0 : ( (this.newProfile.home=='true' && this.newProfile.foodAtHome=='true') ? 0 : parseFloat(this.newProfile.meal.breakfast) );
+      let lunchCost = (this.newProfile.meal==null) ? 0 : parseFloat(this.newProfile.meal.lunch);
+      let dinnerCost = (this.newProfile.meal==null) ? 0 : ( (this.newProfile.home=='true' && this.newProfile.foodAtHome=='true') ? 0 : parseFloat(this.newProfile.meal.dinner) );
+      let transportCost = 0;
       
-      let day = [{y: u/365, label: "Tuition"}, {y: h/30, label: "Hostel"}, {y: f, label: "Food"}];  
-      let week = [{y: u/56, label: "Tuition"}, {y: h/4.5, label: "Hostel"}, {y: f*7, label: "Food"}];
-      let month = [{y: u/12, label: "Tuition"}, {y: h, label: "Hostel"}, {y: f*30, label: "Food"}];
-      let year = [{y: u, label: "Tuition"}, {y: h*12, label: "Hostel"}, {y: f*365, label: "Food"}];
-      
-      return [day, week, month, year];
+      let daily = 
+      [
+        {
+          y: tuitionFee/(30.5*5), 
+          label: "Tuition Fee"
+        },
+        {
+          y: hallRent/30.5,
+          label: "Hall Rent"
+        },
+        {
+          y: breakfastCost,
+          label: "Breakfast"
+        },
+        {
+          y: lunchCost,
+          label: "Lunch"
+        },
+        {
+          y: dinnerCost,
+          label: "Dinner"
+        },
+        {
+          y: transportCost,
+          label: "Transport Cost"
+        }
+      ]
+
+      let weekly = 
+      [
+        {
+          y: tuitionFee/(30.5*5/7), 
+          label: "Tuition Fee"
+        },
+        {
+          y: hallRent/(30.5/7),
+          label: "Hall Rent"
+        },
+        {
+          y: breakfastCost*7,
+          label: "Breakfast"
+        },
+        {
+          y: lunchCost*7,
+          label: "Lunch"
+        },
+        {
+          y: dinnerCost*7,
+          label: "Dinner"
+        },
+        {
+          y: transportCost*7,
+          label: "Transport Cost"
+        }
+      ]
+
+      let monthly = 
+      [
+        {
+          y: tuitionFee/(5), 
+          label: "Tuition Fee"
+        },
+        {
+          y: hallRent,
+          label: "Hall Rent"
+        },
+        {
+          y: breakfastCost*30.5,
+          label: "Breakfast"
+        },
+        {
+          y: lunchCost*30.5,
+          label: "Lunch"
+        },
+        {
+          y: dinnerCost*30.5,
+          label: "Dinner"
+        },
+        {
+          y: transportCost*30.5,
+          label: "Transport Cost"
+        }
+      ]
+
+      let semesterly = 
+      [
+        {
+          y: tuitionFee, 
+          label: "Tuition Fee"
+        },
+        {
+          y: hallRent*5,
+          label: "Hall Rent"
+        },
+        {
+          y: breakfastCost*30.5*5,
+          label: "Breakfast"
+        },
+        {
+          y: lunchCost*30.5*5,
+          label: "Lunch"
+        },
+        {
+          y: dinnerCost*30.5*5,
+          label: "Dinner"
+        },
+        {
+          y: transportCost*30.5*5,
+          label: "Transport Cost"
+        }
+      ]
+
+      return [daily, weekly, monthly, semesterly];
     }
   },
   components: {
 
   },
   firebase: {
-    Profiles: ProfilesRef,
-    Universities: UniversitiesRef,
-    Halls: HallsRef,
-    Foods: FoodsRef
+    profiles: profilesRef,
+    universities: universitiesRef,
+    citizenships : citizenshipsRef,
+    courses : coursesRef,
+    halls: hallsRef,
+    meals: mealsRef
   },
 }
-
 
 </script>
 
