@@ -153,7 +153,7 @@
           <hr>
         </div>
         
-        <input type="submit" class="btn btn-primary" v-on:click="createChart('daily', financialBreakdown[0]); createChart('weekly', financialBreakdown[1]); createChart('monthly', financialBreakdown[2]); createChart('semesterly', financialBreakdown[3])" value="Add Profile">
+        <input type="submit" class="btn btn-primary" v-on:click="govDataAPI('e1c20915-ab7c-4bf9-bbbd-0197bbc7b98c'); createChart('daily', financialBreakdown[0]); createChart('weekly', financialBreakdown[1]); createChart('monthly', financialBreakdown[2]); createChart('semesterly', financialBreakdown[3])" value="Add Profile">
       
       </form>
     </div>
@@ -162,7 +162,8 @@
       {{newProfile}}
       <hr>
       {{financialBreakdown}}
-      }
+      <hr>
+      {{temp_data}}
     </div>
     
     <div class="col-md-12 text-center">
@@ -218,8 +219,9 @@ export default {
           hall : null,
           home : null,
           meal : null,
-          foodAtHome : null
+          foodAtHome : null,
       },
+      temp_data : null
     }
   },
 
@@ -229,11 +231,17 @@ export default {
       this.newProfile.university = null;
       this.newProfile.hall = null;
       this.newProfile.meal = null;
-      console.log('New Entry added')
+      console.log('New Entry created')
       //location.reload()
     },
     removeProfile: function (entry) {
       profilesRef.child(entry['.key']).remove()
+    },
+    myGovDataAPI: function (resource_id) {
+      let url = "https://data.gov.sg/api/action/datastore_search?resource_id=" + resource_id;
+      axios.get(url).then((response) => {
+        this.temp_data = response.data.result.records;
+      }).catch( error => { console.log(error); });
     },
     createChart: function (id, plotData) {
       var chart = new CanvasJS.Chart(id, {
@@ -259,131 +267,77 @@ export default {
 
   computed: {
     financialBreakdown: function() {
-      let tuitionFee = (this.newProfile.course==null) ? 0 : parseFloat(this.newProfile.course.fee);
-      let hallRent = (this.newProfile.hall==null) ? 0 : this.newProfile.hall.rent;
-      let breakfastCost = (this.newProfile.meal==null) ? 0 : ( (this.newProfile.home=='true' && this.newProfile.foodAtHome=='true') ? 0 : parseFloat(this.newProfile.meal.breakfast) );
-      let lunchCost = (this.newProfile.meal==null) ? 0 : parseFloat(this.newProfile.meal.lunch);
-      let dinnerCost = (this.newProfile.meal==null) ? 0 : ( (this.newProfile.home=='true' && this.newProfile.foodAtHome=='true') ? 0 : parseFloat(this.newProfile.meal.dinner) );
+      let tuitionFee = 0;
+      if (this.newProfile.course!=null) {
+        tuitionFee = this.newProfile.course.fee;
+      }
+
+      let hallRent = 0;
+      if (this.newProfile.hall!=null) {
+        hallRent = this.newProfile.hall.rent;
+      }
+
+      let breakfastCost = 0;
+      if (this.newProfile.meal!=null && !(this.newProfile.home=='true' && this.newProfile.foodAtHome=='true')) {
+        breakfastCost = this.newProfile.meal.breakfast;
+      }
+      
+      let lunchCost = 0;
+      if (this.newProfile.meal!=null) {
+        lunchCost = this.newProfile.meal.lunch;
+      }
+
+      let dinnerCost = 0;
+      if (this.newProfile.meal!=null && !(this.newProfile.home=='true' && this.newProfile.foodAtHome=='true')) {
+        dinnerCost = this.newProfile.meal.dinner;
+      }
+
       let transportCost = 0;
       
-      let daily = 
-      [
-        {
-          y: tuitionFee/(30.5*5), 
-          label: "Tuition Fee"
-        },
-        {
-          y: hallRent/30.5,
-          label: "Hall Rent"
-        },
-        {
-          y: breakfastCost,
-          label: "Breakfast"
-        },
-        {
-          y: lunchCost,
-          label: "Lunch"
-        },
-        {
-          y: dinnerCost,
-          label: "Dinner"
-        },
-        {
-          y: transportCost,
-          label: "Transport Cost"
-        }
+      let daily = [
+        {y: tuitionFee/(30.5*5), label: "Tuition Fee"},
+        {y: hallRent/30.5, label: "Hall Rent"},
+        {y: breakfastCost, label: "Breakfast"},
+        {y: lunchCost, label: "Lunch"},
+        {y: dinnerCost, label: "Dinner"},
+        {y: transportCost, label: "Transport Cost"}
       ]
 
-      let weekly = 
-      [
-        {
-          y: tuitionFee/(30.5*5/7), 
-          label: "Tuition Fee"
-        },
-        {
-          y: hallRent/(30.5/7),
-          label: "Hall Rent"
-        },
-        {
-          y: breakfastCost*7,
-          label: "Breakfast"
-        },
-        {
-          y: lunchCost*7,
-          label: "Lunch"
-        },
-        {
-          y: dinnerCost*7,
-          label: "Dinner"
-        },
-        {
-          y: transportCost*7,
-          label: "Transport Cost"
-        }
+      let weekly = [
+        {y: tuitionFee/(30.5*5/7), label: "Tuition Fee"},
+        {y: hallRent/(30.5/7), label: "Hall Rent"},
+        {y: breakfastCost*7, label: "Breakfast"},
+        {y: lunchCost*7, label: "Lunch"},
+        {y: dinnerCost*7, label: "Dinner"},
+        {y: transportCost*7, label: "Transport Cost"}
       ]
 
-      let monthly = 
-      [
-        {
-          y: tuitionFee/(5), 
-          label: "Tuition Fee"
-        },
-        {
-          y: hallRent,
-          label: "Hall Rent"
-        },
-        {
-          y: breakfastCost*30.5,
-          label: "Breakfast"
-        },
-        {
-          y: lunchCost*30.5,
-          label: "Lunch"
-        },
-        {
-          y: dinnerCost*30.5,
-          label: "Dinner"
-        },
-        {
-          y: transportCost*30.5,
-          label: "Transport Cost"
-        }
+      let monthly = [
+        {y: tuitionFee/(5), label: "Tuition Fee"},
+        {y: hallRent, label: "Hall Rent"},
+        {y: breakfastCost*30.5, label: "Breakfast"},
+        {y: lunchCost*30.5, label: "Lunch"},
+        {y: dinnerCost*30.5, label: "Dinner"},
+        {y: transportCost*30.5, label: "Transport Cost" }
       ]
 
-      let semesterly = 
-      [
-        {
-          y: tuitionFee, 
-          label: "Tuition Fee"
-        },
-        {
-          y: hallRent*5,
-          label: "Hall Rent"
-        },
-        {
-          y: breakfastCost*30.5*5,
-          label: "Breakfast"
-        },
-        {
-          y: lunchCost*30.5*5,
-          label: "Lunch"
-        },
-        {
-          y: dinnerCost*30.5*5,
-          label: "Dinner"
-        },
-        {
-          y: transportCost*30.5*5,
-          label: "Transport Cost"
-        }
+      let semesterly = [
+        {y: tuitionFee, label: "Tuition Fee"},
+        {y: hallRent*5, label: "Hall Rent"},
+        {y: breakfastCost*30.5*5, label: "Breakfast"},
+        {y: lunchCost*30.5*5, label: "Lunch"},
+        {y: dinnerCost*30.5*5, label: "Dinner"},
+        {y: transportCost*30.5*5, label: "Transport Cost"}
       ]
 
       return [daily, weekly, monthly, semesterly];
     }
   },
+  
   components: {
 
   },
+
   firebase: {
     profiles: profilesRef,
     universities: universitiesRef,

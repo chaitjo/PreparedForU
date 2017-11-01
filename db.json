@@ -20,6 +20,11 @@
     {
       "value" : "NUS",
       "fullName" : "National University of Singapore"
+    },
+    "SMU" :
+    {
+      "value" : "SMU",
+      "fullName" : "Singapore Management University"
     }
   },
 
@@ -1210,7 +1215,7 @@
     },
     {
       "university" : "NTU",
-      "diet" : "Non-Vegetarian or Veganetarian",
+      "diet" : "Non-Vegetarian",
       "breakfast" : "1.5",
       "lunch" : "5",
       "dinner" : "5"
@@ -1224,10 +1229,24 @@
     },
     {
       "university" : "NUS",
-      "diet" : "Non-Vegetarian or Veganetarian",
+      "diet" : "Non-Vegetarian",
       "breakfast" : "1.5",
       "lunch" : "5",
       "dinner" : "5"
+    },
+    {
+      "university" : "SMU",
+      "diet" : "Vegetarian or Vegan",
+      "breakfast" : "2",
+      "lunch" : "5",
+      "dinner" : "5"
+    },
+    {
+      "university" : "SMU",
+      "diet" : "Non-Vegetarian",
+      "breakfast" : "2",
+      "lunch" : "6",
+      "dinner" : "6"
     }
   ]
 }
