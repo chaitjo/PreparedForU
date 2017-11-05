@@ -1,9 +1,9 @@
 <template>
   <div id="app">
 
-    <!-- <div class="bg" style="height: 100vh;">
+    <div class="bg" style="height: 100vh;">
       <h1 style="text-align: center; padding-top: 250px; color: white; ">PreparedForU</h1>
-    </div> -->
+    </div>
 
     <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
       <!-- Indicators -->
@@ -329,7 +329,7 @@
           <div class="row"> 
             <button v-on:click="createChart(show_chart, financialBreakdown[show_chart])">Submit</button>
           </div>
-          {{financialBreakdown[show_chart]}}
+          {{financialBreakdown}}
         </div>
         <div class="col-md-8">
           <div id="daily" v-if="show_chart=='daily'" style="height: 100vh; width: 100%;"></div>
