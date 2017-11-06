@@ -1,8 +1,8 @@
 <template>
   <div id="app">
 
-    <div class="bg" style="height: 100vh;">
-      <h1 style="text-align: center; padding-top: 250px; color: white; ">PreparedForU</h1>
+    <div id="landing" class="bg">
+      <h1 style="text-align: center; padding-top: 250px; color: white;">PreparedForU</h1>
     </div>
 
     <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
@@ -63,11 +63,13 @@
               <h3>Select your course</h3>
             </div>
             <div class="row col-md-10 col-md-offset-1">
-              <select class="col-md-4 col-md-offset-4" v-model="newProfile.course">
-                <option v-for="course in courses" v-if="course.university==newProfile.university && course.citizenship==newProfile.citizenship" :id="course.course" v-bind:value="course">
-                  {{course.course}}
-                </option>
+              <div class="col-md-4 col-md-offset-4">
+                <select class="form-control" v-model="newProfile.course">
+                  <option v-for="course in courses" v-if="course.university==newProfile.university && course.citizenship==newProfile.citizenship" :id="course.course" v-bind:value="course">
+                    {{course.course}}
+                  </option>
               </select>
+              </div>
             </div>
           </div>
 
@@ -154,11 +156,13 @@
               <h3>Select your hall</h3>
             </div>
             <div class="row col-md-10 col-md-offset-1">
-              <select class="col-md-4 col-md-offset-4" v-model="newProfile.hall">
-                <option v-for="hall in halls" v-if="hall.university==newProfile.university && newProfile.roomOccupancy==hall.occupancy && newProfile.roomAirCon==hall.airCon" :id="hall.hall" v-bind:value="hall">
-                  {{hall.hall}}
-                </option>
-              </select>
+              <div class="col-md-4 col-md-offset-4">
+                <select class="form-control" v-model="newProfile.hall">
+                  <option v-for="hall in halls" v-if="hall.university==newProfile.university && newProfile.roomOccupancy==hall.occupancy && newProfile.roomAirCon==hall.airCon" :id="hall.hall" v-bind:value="hall">
+                    {{hall.hall}}
+                  </option>
+                </select>  
+              </div>
             </div>
           </div>
           
@@ -295,7 +299,7 @@
           <div class="container" v-if="newProfile.meal">
             <div class="row col-md-10 col-md-offset-1">
               <hr>
-              <a href="#result" class="col-md-4 col-md-offset-4 btn btn-submit" v-if="newProfile.meal" v-on:click="financialBreakdown=calculateFinancialBreakdown(); createChart(show_chart, financialBreakdown[show_chart]);">Submit</a>
+              <a href="#result" class="col-md-4 col-md-offset-4 btn btn-submit" v-if="newProfile.meal" v-on:click="financialBreakdown=calculateFinancialBreakdown();">Submit</a>
             </div>
           </div>
 
@@ -319,23 +323,19 @@
       <div class="row">
         <div class="col-md-4">
           <div class="row">
-            <select v-model="show_chart">
-              <option value="daily" selected>Daily</option>
-              <option value="weekly" selected>Weekly</option>
-              <option value="monthly" selected>Monthly</option>
-              <option value="semesterly" selected>Semesterly</option>
-            </select>
-          </div>
-          <div class="row"> 
-            <button v-on:click="createChart(show_chart, financialBreakdown[show_chart])">Submit</button>
+            <div class="col-md-8 col-md-offset-2">
+              <select class="form-control" v-model="show_chart">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="semesterly">Semesterly</option>
+              </select>
+            </div>
           </div>
           {{financialBreakdown}}
         </div>
         <div class="col-md-8">
-          <div id="daily" v-if="show_chart=='daily'" style="height: 100vh; width: 100%;"></div>
-          <div id="weekly" v-if="show_chart=='weekly'" style="height: 100vh; width: 100%;"></div>
-          <div id="monthly" v-if="show_chart=='monthly'" style="height: 100vh; width: 100%;"></div>
-          <div id="semesterly" v-if="show_chart=='semesterly'" style="height: 100vh; width: 100%;"></div>
+          <bar-chart :legend="false" v-if="show_chart" :data="financialBreakdown[show_chart]" :library="{}"></bar-chart>
         </div>
       </div>
     </div>
@@ -388,7 +388,7 @@ export default {
       },
       temp_data : null,
       financialBreakdown : null,
-      show_chart : 'daily'
+      show_chart : null
     }
   },
 
@@ -429,41 +429,41 @@ export default {
 
       let transportCost = 0;
       
-      let daily = [
-        {y: tuitionFee/(30.5*5), label: "Tuition Fee"},
-        {y: hallRent/30.5, label: "Hall Rent"},
-        {y: breakfastCost, label: "Breakfast"},
-        {y: lunchCost, label: "Lunch"},
-        {y: dinnerCost, label: "Dinner"},
-        {y: transportCost, label: "Transport Cost"}
-      ]
+      let daily = {
+        "Tuition Fee" : tuitionFee/(30.5*5),
+        "Hall Rent" : hallRent/30.5,
+        "Breakfast" : breakfastCost,
+        "Lunch" : lunchCost,
+        "Dinner" : dinnerCost,
+        "Transport Cost" : transportCost
+      }
 
-      let weekly = [
-        {y: tuitionFee/(30.5*5/7), label: "Tuition Fee"},
-        {y: hallRent/(30.5/7), label: "Hall Rent"},
-        {y: breakfastCost*7, label: "Breakfast"},
-        {y: lunchCost*7, label: "Lunch"},
-        {y: dinnerCost*7, label: "Dinner"},
-        {y: transportCost*7, label: "Transport Cost"}
-      ]
+      let weekly = {
+        "Tuition Fee" : tuitionFee/(30.5*5/7),
+        "Hall Rent" : hallRent/(30.5/7),
+        "Breakfast" : breakfastCost*7,
+        "Lunch" : lunchCost*7,
+        "Dinner" : dinnerCost*7,
+        "Transport Cost" : transportCost*7
+      }
 
-      let monthly = [
-        {y: tuitionFee/(5), label: "Tuition Fee"},
-        {y: hallRent, label: "Hall Rent"},
-        {y: breakfastCost*30.5, label: "Breakfast"},
-        {y: lunchCost*30.5, label: "Lunch"},
-        {y: dinnerCost*30.5, label: "Dinner"},
-        {y: transportCost*30.5, label: "Transport Cost" }
-      ]
+      let monthly = {
+        "Tuition Fee" : tuitionFee/5,
+        "Hall Rent" : hallRent,
+        "Breakfast" : breakfastCost*30.5,
+        "Lunch" : lunchCost*30.5,
+        "Dinner" : dinnerCost*30.5,
+        "Transport Cost" : transportCost*30.5
+      }
 
-      let semesterly = [
-        {y: tuitionFee, label: "Tuition Fee"},
-        {y: hallRent*5, label: "Hall Rent"},
-        {y: breakfastCost*30.5*5, label: "Breakfast"},
-        {y: lunchCost*30.5*5, label: "Lunch"},
-        {y: dinnerCost*30.5*5, label: "Dinner"},
-        {y: transportCost*30.5*5, label: "Transport Cost"}
-      ]
+      let semesterly = {
+        "Tuition Fee" : tuitionFee,
+        "Hall Rent" : hallRent*5,
+        "Breakfast" : breakfastCost*30.5*5,
+        "Lunch" : lunchCost*30.5*5,
+        "Dinner" : dinnerCost*30.5*5,
+        "Transport Cost" : transportCost*30.5*5
+      }
 
       return {
         'daily' : daily,
@@ -517,32 +517,21 @@ export default {
 
 <style>
 
-.bg { 
-    background-image: url("assets/header.jpg");
-    height: 100%; 
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+#landing {
+  background-image: url("assets/header.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
 }
 
-[type='radio'] {
-  visibility: hidden;
-  width: 0;
-  height: 0;
-}
-
-label {
-  cursor: pointer;
-  font-weight: normal;
-  text-align: center;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 0;
-}
-
-.carousel {
+#carousel {
   height: 100vh; 
   background: #21374B;
+}
+
+#result {
+  height: 100vh;
 }
 
 .carousel-indicators {
@@ -558,20 +547,40 @@ label {
   margin-top: 20px;
 }
 
-h1 {
+#carousel .form-control {
+  color: #21374B; 
+  background-color: #E7DACB;
+}
+
+#carousel h1 {
   color: #E7DACB;
   font-weight: lighter;
 }
 
-h3 {
+#carousel h3 {
   color: #E7DACB;
   font-weight: lighter;
 }
 
-hr {
+#carousel hr {
     max-width: 100px;
     border-width: 3px;
     border-color: #4A89AA;
+}
+
+[type='radio'] {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+label {
+  cursor: pointer;
+  font-weight: normal;
+  text-align: center;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0;
 }
 
 .btn-option {
@@ -608,11 +617,6 @@ hr {
   color: #E7DACB;
   background-color: #4A89AA;
   border-color: #4A89AA;
-}
-
-select {
-  color: #21374B; 
-  background-color: #E7DACB;
 }
 
 </style>
