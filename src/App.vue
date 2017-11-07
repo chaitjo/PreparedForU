@@ -1,8 +1,26 @@
 <template>
   <div id="app">
 
-    <div id="landing" class="bg">
-      <h1 style="text-align: center; padding-top: 250px; color: white;">PreparedForU</h1>
+    <div id="landing">
+      <div class="centered">
+        <div class="container">
+          <div class="row">
+            <h1>PreparedForU</h1>            
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <p>A simple tool for university aspirants and students in Singapore to estimate and visualize their spending on tuition, rent, transport and living based on publically available data.</p>
+            </div>            
+          </div>
+          <div class="row text-center">
+            <div class="col-md-4 col-md-offset-4">
+              <div class="col-md-8 col-md-offset-2">
+               <a href="#carousel" class="btn btn-start btn-block">Get Started</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
@@ -15,11 +33,11 @@
       </ol>
 
       <!-- Wrapper for slides -->
-      <div class="carousel-inner">
+      <div class="carousel-inner centered">
         
         <div class="item active">
           
-          <div class="container">
+          <div class="container" style="margin-top: 0px;">
             <div class="row">
               <h1>Tuition</h1>
               <hr>
@@ -84,7 +102,7 @@
 
         <div class="item" v-if="newProfile.course">
 
-          <div class="container">
+          <div class="container" style="margin-top: 0px;">
             <div class="row">
               <h1>Housing and Rent</h1>
               <hr>
@@ -177,7 +195,7 @@
 
         <div class="item" v-if="newProfile.stayingOnCampus">
 
-          <div class="container">
+          <div class="container" style="margin-top: 0px;">
             <div class="row">
               <h1>Transportation</h1>
               <hr>
@@ -210,7 +228,7 @@
             </div>
             <div class="row col-md-10 col-md-offset-1">
               <div class="col-md-4 col-md-offset-4">
-                <input type="text" id="home" placeholder="Enter Postal Code" v-model="newProfile.home" style="color:#21374B; background-color: #E7DACB;">
+                <input type="text" id="home" placeholder="Enter Postal Code" v-model="newProfile.home" style="color:#21374B; background-color: #eee;">
               </div>
             </div>
           </div>
@@ -299,7 +317,7 @@
           <div class="container" v-if="newProfile.meal">
             <div class="row col-md-10 col-md-offset-1">
               <hr>
-              <a href="#result" class="col-md-4 col-md-offset-4 btn btn-submit" v-if="newProfile.meal" v-on:click="financialBreakdown=calculateFinancialBreakdown();">Submit</a>
+              <a href="#result" class="col-md-4 col-md-offset-4 btn btn-submit" v-if="newProfile.meal" v-on:click="financialBreakdown=calculateFinancialBreakdown(); show_chart='daily'">Submit</a>
             </div>
           </div>
 
@@ -308,14 +326,14 @@
       </div>
 
       <!-- Left and right controls -->
-      <a class="left carousel-control" href="#carousel" data-slide="prev">
+      <!-- <a class="left carousel-control" href="#carousel" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left"></span>
         <span class="sr-only">Previous</span>
       </a>
       <a class="right carousel-control" href="#carousel" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right"></span>
         <span class="sr-only">Next</span>
-      </a>
+      </a> -->
     
     </div>
     
@@ -335,7 +353,7 @@
           {{financialBreakdown}}
         </div>
         <div class="col-md-8">
-          <bar-chart :legend="false" v-if="show_chart" :data="financialBreakdown[show_chart]" :library="{}"></bar-chart>
+          <bar-chart :legend="true" v-if="show_chart" :data="[{name:newProfile.university, data:financialBreakdown[show_chart]}]" :library="{}"></bar-chart>
         </div>
       </div>
     </div>
@@ -471,26 +489,6 @@ export default {
         'monthly' : monthly, 
         'semesterly' : semesterly
       }
-    },
-
-    createChart: function (id, plotData) {
-      this.show_chart = id;
-      var chart = new CanvasJS.Chart(id, {
-        animationEnabled: true,
-        title:{
-          text: "",
-          horizontalAlign: "center"
-        },
-        data: [{
-          type: "doughnut",
-          startAngle: 60,
-          indexLabelFontSize: 17,
-          indexLabel: "{label} - {y}",
-          toolTipContent: "<b>{label}:</b> {y} (#percent%)",
-          dataPoints: plotData
-        }]
-      });
-      chart.render();
     }
   },
 
@@ -517,6 +515,10 @@ export default {
 
 <style>
 
+body {
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
 #landing {
   background-image: url("assets/header.jpg");
   background-position: center;
@@ -535,30 +537,64 @@ export default {
 }
 
 .carousel-indicators {
-  color: #E7DACB;
+  color: #eee;
 }
 
 .item {
   text-align: center; 
-  margin-top: 50px;
 }
 
-.container {
+.centered {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+#landing h1 {
+  text-align: center;
+  font-weight: 400;
+  font-stretch: normal;
+  font-size: 76px;
+  line-height: 80px;
+  font-family: Oswald, sans-serif;
+  letter-spacing: 1.52px;
+  margin-bottom: 40px;
+  color: #eee;
+}
+
+#landing p {
+  text-align: justify; 
+  color: #eee; 
+  font-weight: 400;
+  font-stretch: normal;
+  font-size: 16px;
+  line-height: 30px;
+  font-family: Quattrocento, sans-serif;
+  width: 50%;
+  margin: 0 auto;
+  padding: 30px 0;
+  border-bottom: 2px solid #eee;
+  border-top: 2px solid #eee;
+}
+
+#carousel .container {
   margin-top: 20px;
 }
 
 #carousel .form-control {
   color: #21374B; 
-  background-color: #E7DACB;
+  background-color: #eee;
 }
 
 #carousel h1 {
-  color: #E7DACB;
+  color: #eee;
   font-weight: lighter;
 }
 
 #carousel h3 {
-  color: #E7DACB;
+  color: #eee;
   font-weight: lighter;
 }
 
@@ -583,10 +619,30 @@ label {
   margin-bottom: 0;
 }
 
+.btn-start {
+  margin-top: 50px;
+  color: #EDCE06;
+  background-color: transparent;
+  border-color: #EDCE06;
+  border-width: 2px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.btn-start:hover,
+.btn-start:focus,
+.btn-start.focus,
+.btn-start:active,
+.btn-start.active {
+  color: #8888888;
+  background-color: #EDCE06;
+  border-color: #EDCE06;  
+}
+
 .btn-option {
-  color: #E7DACB;
+  color: #eee;
   background-color: #21374B;
-  border-color: #E7DACB;
+  border-color: #eee;
 }
 
 .btn-option:hover,
@@ -600,13 +656,14 @@ label {
 }
 
 .btn-submit {
-  color: #E7DACB;
+  color: #eee;
   background-color: #21374B;
   border-color: #4A89AA;
   border-width: 2px;
   font-weight: bold;
   text-transform: uppercase;
   margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .btn-submit:hover,
@@ -614,7 +671,7 @@ label {
 .btn-submit.focus,
 .btn-submit:active,
 .btn-submit.active {
-  color: #E7DACB;
+  color: #eee;
   background-color: #4A89AA;
   border-color: #4A89AA;
 }
