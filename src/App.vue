@@ -5,7 +5,7 @@
       <div class="centered">
         <div class="container">
           <div class="row">
-            <h1>PreparedForU</h1>            
+            <h1>PreparedFor<span style="color: #FF8C00; font-weight: 500;">U</span></h1>            
           </div>
           <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -94,7 +94,7 @@
           <div class="container" v-if="newProfile.course">
             <div class="row col-md-10 col-md-offset-1">
               <hr>
-              <a href="#carousel" data-slide="next" class="col-md-4 col-md-offset-4 btn btn-submit">Next</a>
+              <a href="#carousel" data-slide="next" class="col-md-4 col-md-offset-4 btn btn-submit" v-on:click="myOneMapSearchAPI(newProfile.university, 'university');">Next</a>
             </div>
           </div>
         
@@ -259,10 +259,44 @@
             </div>
           </div>
 
-          <div class="container" v-if="newProfile.stayingOnCampusWeekends=='true' || newProfile.transport">
+          <div class="container" v-if="newProfile.home && newProfile.transport=='public'">
+            <div class="row">
+              <h3>Select your concession card type</h3>
+            </div>
+            <div class="row col-md-10 col-md-offset-1">
+              <div class="col-md-4">
+                <div class="col-md-12 btn btn-option" v-bind:class="{active: newProfile.concession=='bus'}">
+                  <input type="radio" id="bus" value="bus" v-model="newProfile.concession">
+                  <label for="bus">Bus Only</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="col-md-12 btn btn-option" v-bind:class="{active: newProfile.concession=='train'}">
+                  <input type="radio" id="train" value="train" v-model="newProfile.concession">
+                  <label for="train">Train Only</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="col-md-12 btn btn-option" v-bind:class="{active: newProfile.concession=='hybrid'}">
+                  <input type="radio" id="hybrid" value="hybrid" v-model="newProfile.concession">
+                  <label for="hybrid">Hybrid</label>
+                </div>
+              </div>
+            </div>
+            <div class="row col-md-10 col-md-offset-1" style="margin-top: 10px;">
+              <div class="col-md-4 col-md-offset-4">
+                <div class="col-md-12 btn btn-option" v-bind:class="{active: newProfile.concession=='none'}">
+                  <input type="radio" id="none" value="none" v-model="newProfile.concession">
+                  <label for="none">None</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container" v-if="newProfile.stayingOnCampusWeekends=='true' || (newProfile.transport=='public' && newProfile.concession) || newProfile.transport=='taxi' || newProfile.transport=='personal'">
             <div class="row col-md-10 col-md-offset-1">
               <hr>
-              <a href="#carousel" data-slide="next" class="col-md-4 col-md-offset-4 btn btn-submit">Next</a>
+              <a href="#carousel" data-slide="next" class="col-md-4 col-md-offset-4 btn btn-submit" v-on:click="myOneMapSearchAPI(newProfile.home, 'home');">Next</a>
             </div>
           </div>
 
@@ -317,7 +351,7 @@
           <div class="container" v-if="newProfile.meal">
             <div class="row col-md-10 col-md-offset-1">
               <hr>
-              <a href="#result" class="col-md-4 col-md-offset-4 btn btn-submit" v-if="newProfile.meal" v-on:click="financialBreakdown=calculateFinancialBreakdown(); show_chart='daily'">Submit</a>
+              <a href="#result" class="col-md-4 col-md-offset-4 btn btn-submit" v-if="newProfile.meal" v-on:click="calculateFinancialBreakdown(); show_chart='0'">Submit</a>
             </div>
           </div>
 
@@ -343,18 +377,38 @@
           <div class="row">
             <div class="col-md-8 col-md-offset-2">
               <select class="form-control" v-model="show_chart">
-                <option value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-                <option value="semesterly">Semesterly</option>
+                <option value="0">Daily</option>
+                <option value="1">Weekly</option>
+                <option value="2">Monthly</option>
+                <option value="3">Semesterly</option>
               </select>
             </div>
           </div>
+          <div class="row">
+            <a class="btn btn-submit" v-on:click="oldFinancialBreakdown=financialBreakdown; show_compare='true';">Compare</a>
+          </div>
+          {{newProfile}}
+          <hr>
           {{financialBreakdown}}
+          <hr>
+          {{oldFinancialBreakdown}}
+          <hr>
+          {{show_chart}}
         </div>
         <div class="col-md-8">
-          <bar-chart :legend="true" v-if="show_chart" :data="[{name:newProfile.university, data:financialBreakdown[show_chart]}]" :library="{}"></bar-chart>
+          <bar-chart :legend="true" v-if="show_chart && !(show_compare)" :data="[financialBreakdown[show_chart]]"></bar-chart>
+          <bar-chart :legend="true" v-else-if="show_chart && show_compare" :data="[financialBreakdown[show_chart], oldFinancialBreakdown[show_chart]]"></bar-chart>
         </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <a class="btn btn-submit" v-on:click="myOneMapSearchAPI(newProfile.university, 'university'); myOneMapSearchAPI(newProfile.home, 'home'); myOneMapRouteAPI();">GO</a>
+        <a class="btn btn-submit" v-on:click="myGovDataAPI('70f568d2-85a4-4926-ab7a-e28c7728b6c0','Train')">API</a>
+      </div>
+      <div class="row">
+        {{faresTrainData}}
       </div>
     </div>
 
@@ -379,7 +433,6 @@ let config = {
 let app = Firebase.initializeApp(config)
 let db = app.database()
 
-let profilesRef = db.ref('profiles')
 let universitiesRef = db.ref('universities')
 let citizenshipsRef = db.ref('citizenships')
 let coursesRef = db.ref('courses')
@@ -393,6 +446,7 @@ export default {
     return {
       newProfile: {
           university : null,
+          universityLatLong : null,
           citizenship : null,
           course : null,
           stayingOnCampus : null,
@@ -401,93 +455,241 @@ export default {
           roomAirCon : null,
           hall : null,
           home : null,
+          homeLatLong : null,
+          concession : null,
           meal : null,
           foodAtHome : null,
+          transport : null,
+          route : null,
       },
       temp_data : null,
+      concessionData : null,
+      faresTrainData : null,
+      faresBusData : null,
       financialBreakdown : null,
-      show_chart : null
+      oldFinancialBreakdown : null,
+      show_chart : null,
+      show_compare : null,
     }
   },
 
   methods: {
 
-    myGovDataAPI: function (resource_id) {
+    myGovDataAPI: function (resource_id, modifier) {
       let url = "https://data.gov.sg/api/action/datastore_search?resource_id=" + resource_id;
       axios.get(url).then((response) => {
-        this.temp_data = response.data.result.records;
+        if (modifier=='Train') {
+          this.faresTrainData = response.data.result.records;
+        }
+        else if (modifier=='Bus') {
+          this.faresBusData = response.data.result.records;
+        }
+        else if (modifier=='Concession') {
+          this.concessionData = response.data.result.records[3];
+        }
+        else {
+          this.temp_data = response.data;
+        }
       }).catch( error => { console.log(error); });
     },
 
+    myOneMapSearchAPI: function (searchText, modifier) {
+      let url = "https://developers.onemap.sg/commonapi/search?searchVal=" + searchText + "&returnGeom=Y&getAddrDetails=N&pageNum=1";
+      axios.get(url).then((response) => {
+        if (modifier=='university') {
+          this.newProfile.universityLatLong = response.data.results[0].LATITUDE + ',' + response.data.results[0].LONGITUDE;
+        }
+        else if (modifier=='home') {
+          this.newProfile.homeLatLong = response.data.results[0].LATITUDE + ',' + response.data.results[0].LONGITUDE;
+        } 
+        else {
+          this.temp_data = response.data;
+        }
+      }).catch( error => { console.log(error); });
+    },
+
+    myOneMapRouteAPI: function () {
+      let start = this.newProfile.homeLatLong;
+      let end = this.newProfile.universityLatLong;
+      let routeType = 'pt';
+      let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEwODMsInVzZXJfaWQiOjEwODMsImVtYWlsIjoiY2tqb3NoaTlAZ21haWwuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cL29tMi5kZmUub25lbWFwLnNnXC9hcGlcL3YyXC91c2VyXC9zZXNzaW9uIiwiaWF0IjoxNTEwMTYxOTQwLCJleHAiOjE1MTA1OTM5NDAsIm5iZiI6MTUxMDE2MTk0MCwianRpIjoiNjExYWExNjA5MTNiM2M0ZTUwN2MwNzI3MWU4MDU5MTIifQ.Xs6SNtd_5udG_v2cRsVMdwJEPB7sf9vyr2u92sPPoYY';
+      let date = '2017-11-07';
+      let time = '10:00:00';
+      let mode = 'TRANSIT';
+      let url = "https://developers.onemap.sg/privateapi/routingsvc/route?" + "start=" + start + "&end=" + end + "&routeType=" + routeType + "&token=" + token + "&date=" + date + "&time=" + time + "&mode=" + mode + "&numItineraries=1";
+      console.log(url)
+      axios.get(url).then((response) => {
+        this.newProfile.route = response.data.plan.itineraries[0];
+        }).catch( error => { console.log(error); });
+    },
+
     calculateFinancialBreakdown: function() {
-      let tuitionFee = 0;
+      let tuitionFee = [0, 0, 0, 0];
       if (this.newProfile.course!=null) {
-        tuitionFee = this.newProfile.course.fee;
+        tuitionFee[3] = this.newProfile.course.fee;
+        tuitionFee[0] = tuitionFee[3]/(30.5*5);
+        tuitionFee[1] = tuitionFee[3]/((30.5*5/7));
+        tuitionFee[2] = tuitionFee[3]/5;
       }
 
-      let hallRent = 0;
+      let hallRent = [0, 0, 0, 0];
       if (this.newProfile.hall!=null) {
-        hallRent = this.newProfile.hall.rent;
+        hallRent[2] = this.newProfile.hall.rent;
+        hallRent[0] = hallRent[2]/30.5;
+        hallRent[1] = hallRent[2]/(30.5/7);
+        hallRent[3] = hallRent[2]*5;
       }
 
-      let breakfastCost = 0;
+      let transportCost = [0,0,0,0];
+      let concessionCost = 0;
+      if (this.newProfile.home && this.newProfile.transport=='public') { 
+        if (this.newProfile.concession!='none') {
+          concessionCost = this.concessionData[this.newProfile.concession+'_price'];
+        }
+          
+        let dist_bus = 0;
+        let dist_train = 0;
+        for (let i=0; i<this.newProfile.route.legs.length; i++) {
+          if(this.newProfile.route.legs[i].mode == "BUS"){
+            dist_bus += this.newProfile.route.legs[i].distance;
+          }
+          if(this.newProfile.route.legs[i].mode == "SUBWAY") {
+            dist_train += this.newProfile.route.legs[i].distance;
+          }
+        }
+        
+        dist_train /= 1000;
+        let trainCost = 0;
+        if (0 < dist_train <= 3.2) {
+          if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
+            trainCost = Number(this.faresTrainData[0]["student_card_fare_per_ride"]);
+          }
+          else {
+            trainCost = Number(this.faresTrainData[0]["single_trip_ticket_fare_per_ride"]);
+          }
+        }
+        else if (dist_train > 40.2) {
+          if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
+            trainCost = Number(this.faresTrainData[this.faresTrainData.length-1]["student_card_fare_per_ride"]);
+          }
+          else {
+            trainCost = Number(this.faresTrainData[this.faresTrainData.length-1]["single_trip_ticket_fare_per_ride"]);
+          }
+        }
+        else {
+            for (let i=1; i<this.faresTrainData.length-1; i++) {
+            let start = Number(faresTrainData[i]['distance'].slice(0, faresTrainData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
+            let end = Number(faresTrainData[i]['distance'].slice(faresTrainData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
+            if (start <= dist_train <= end) {
+              if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
+                trainCost = Number(this.faresTrainData[i]["student_card_fare_per_ride"]);
+              }
+              else {
+                trainCost = Number(this.faresTrainData[i]["single_trip_ticket_fare_per_ride"]);
+              }
+              break;
+            }
+          }
+        }
+
+        dist_bus /= 1000;
+        let busCost = 0;
+        if (0 < dist_bus <= 3.2) {
+          if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
+            busCost = Number(this.faresBusData[0]["student_card_fare_per_ride"]);
+          }
+          else {
+            busCost = Number(this.faresBusData[0]["single_trip_ticket_fare_per_ride"]);
+          }
+        }
+        else if (dist_bus > 40.2) {
+         if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
+            busCost = Number(this.faresBusData[this.faresBusData.length-1]["student_card_fare_per_ride"]);
+          }
+          else {
+            busCost = Number(this.faresBusData[this.faresBusData.length-1]["single_trip_ticket_fare_per_ride"]);
+          } 
+        }
+        else {
+          for (let i=0; i<this.faresBusData.length; i++) {
+            let start = Number(faresBusData[i]['distance'].slice(0, faresBusData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
+            let end = Number(faresBusData[i]['distance'].slice(faresBusData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
+            if (start <= dist_bus <= end) {
+              if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
+                busCost = Number(this.faresBusData[i]["student_card_fare_per_ride"]);
+              }
+              else {
+                busCost = Number(this.faresBusData[i]["single_trip_ticket_fare_per_ride"]);
+              }
+              break;
+            }
+          }
+        }
+
+        if (!this.newProfile.stayingOnCampus) {
+          transportCost[0] = (busCost/100 + trainCost/100)*2;
+          transportCost[1] = transportCost[0]*5;
+        }
+        else if (!this.newProfile.stayingOnCampusWeekends) {
+          transportCost[0] = 0;
+          transportCost[1] = (busCost/100 + trainCost/100)*2;
+        }
+        transportCost[2] = transportCost[1]*(30.5/7) + concessionCost;
+        transportCost[3] = transportCost[2]*5;
+      }
+
+      let breakfastCost = [0,0,0,0];
       if (this.newProfile.meal!=null && !(this.newProfile.home=='true' && this.newProfile.foodAtHome=='true')) {
-        breakfastCost = this.newProfile.meal.breakfast;
+        breakfastCost[0] = this.newProfile.meal.breakfast;
+        if (!this.newProfile.stayingOnCampusWeekends) {
+          breakfastCost[1] = breakfastCost[0]*5;
+        }
+        else {
+          breakfastCost[1] = breakfastCost[0]*7;
+        }
+        breakfastCost[2] = breakfastCost[1]*(30.5/7);
+        breakfastCost[3] = breakfastCost[2]*5;
       }
       
-      let lunchCost = 0;
+      let lunchCost = [0,0,0,0];
       if (this.newProfile.meal!=null) {
-        lunchCost = this.newProfile.meal.lunch;
+        lunchCost[0] = this.newProfile.meal.lunch;
+        if (!this.newProfile.stayingOnCampusWeekends) {
+          lunchCost[1] = lunchCost[0]*5;
+        }
+        else {
+          lunchCost[1] = lunchCost[0]*7;
+        }
+        lunchCost[2] = lunchCost[1]*(30.5/7);
+        lunchCost[3] = lunchCost[2]*5;
       }
 
-      let dinnerCost = 0;
+      let dinnerCost = [0,0,0,0];
       if (this.newProfile.meal!=null && !(this.newProfile.home=='true' && this.newProfile.foodAtHome=='true')) {
-        dinnerCost = this.newProfile.meal.dinner;
+        dinnerCost[0] = this.newProfile.meal.dinner;
+        if (!this.newProfile.stayingOnCampusWeekends) {
+          dinnerCost[1] = dinnerCost[0]*5;
+        }
+        else {
+          dinnerCost[1] = dinnerCost[0]*7;
+        }
+        dinnerCost[2] = dinnerCost[1]*(30.5/7);
+        dinnerCost[3] = dinnerCost[2]*5;
       }
-
-      let transportCost = 0;
       
-      let daily = {
-        "Tuition Fee" : tuitionFee/(30.5*5),
-        "Hall Rent" : hallRent/30.5,
-        "Breakfast" : breakfastCost,
-        "Lunch" : lunchCost,
-        "Dinner" : dinnerCost,
-        "Transport Cost" : transportCost
-      }
-
-      let weekly = {
-        "Tuition Fee" : tuitionFee/(30.5*5/7),
-        "Hall Rent" : hallRent/(30.5/7),
-        "Breakfast" : breakfastCost*7,
-        "Lunch" : lunchCost*7,
-        "Dinner" : dinnerCost*7,
-        "Transport Cost" : transportCost*7
-      }
-
-      let monthly = {
-        "Tuition Fee" : tuitionFee/5,
-        "Hall Rent" : hallRent,
-        "Breakfast" : breakfastCost*30.5,
-        "Lunch" : lunchCost*30.5,
-        "Dinner" : dinnerCost*30.5,
-        "Transport Cost" : transportCost*30.5
-      }
-
-      let semesterly = {
-        "Tuition Fee" : tuitionFee,
-        "Hall Rent" : hallRent*5,
-        "Breakfast" : breakfastCost*30.5*5,
-        "Lunch" : lunchCost*30.5*5,
-        "Dinner" : dinnerCost*30.5*5,
-        "Transport Cost" : transportCost*30.5*5
-      }
-
-      return {
-        'daily' : daily,
-        'weekly' : weekly, 
-        'monthly' : monthly, 
-        'semesterly' : semesterly
+      this.financialBreakdown = []
+      for (let i=0; i<4; i++) {
+        this.financialBreakdown[i] = {
+          name : this.newProfile.university,
+          data : {
+            "Tuition Fee" : tuitionFee[i],
+            "Hall Rent" : hallRent[i],
+            "Transport Cost" : transportCost[i],
+            "Breakfast" : breakfastCost[i],
+            "Lunch" : lunchCost[i],
+            "Dinner" : dinnerCost[i]
+          }
+        }
       }
     }
   },
@@ -501,7 +703,6 @@ export default {
   },
 
   firebase: {
-    profiles: profilesRef,
     universities: universitiesRef,
     citizenships : citizenshipsRef,
     courses : coursesRef,
@@ -554,12 +755,12 @@ body {
 
 #landing h1 {
   text-align: center;
-  font-weight: 400;
+  font-weight: 300;
   font-stretch: normal;
   font-size: 76px;
   line-height: 80px;
   font-family: Oswald, sans-serif;
-  letter-spacing: 1.52px;
+  letter-spacing: 2px;
   margin-bottom: 40px;
   color: #eee;
 }
@@ -570,7 +771,7 @@ body {
   font-weight: 400;
   font-stretch: normal;
   font-size: 16px;
-  line-height: 30px;
+  line-height: 24px;
   font-family: Quattrocento, sans-serif;
   width: 50%;
   margin: 0 auto;
@@ -589,12 +790,15 @@ body {
 }
 
 #carousel h1 {
+  font-family: Quattrocento, sans-serif;
+  font-weight: 400;
+  font-size: 42px;
   color: #eee;
-  font-weight: lighter;
 }
 
 #carousel h3 {
   color: #eee;
+  font-size: 20px;
   font-weight: lighter;
 }
 
@@ -621,9 +825,9 @@ label {
 
 .btn-start {
   margin-top: 50px;
-  color: #EDCE06;
+  color: #FF8C00;
   background-color: transparent;
-  border-color: #EDCE06;
+  border-color: #FF8C00;
   border-width: 2px;
   font-weight: bold;
   text-transform: uppercase;
@@ -635,13 +839,13 @@ label {
 .btn-start:active,
 .btn-start.active {
   color: #8888888;
-  background-color: #EDCE06;
-  border-color: #EDCE06;  
+  background-color: #FF8C00;
+  border-color: #FF8C00;  
 }
 
 .btn-option {
   color: #eee;
-  background-color: #21374B;
+  background-color: transparent;
   border-color: #eee;
 }
 
@@ -651,8 +855,8 @@ label {
 .btn-option:active,
 .btn-option.active {
   color: #21374B;
-  background-color: #EDCE06;
-  border-color: #EDCE06;  
+  background-color: #FF8C00;
+  border-color: #FF8C00;  
 }
 
 .btn-submit {

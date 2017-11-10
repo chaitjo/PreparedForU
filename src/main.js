@@ -13,7 +13,6 @@ Vue.use(VueFire)
 
 Vue.use(VueChartkick, { Chartkick })
 
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
