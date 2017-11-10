@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-smoothscroll="{ duration : 500, callback: callback , context : undefined }">
 
     <div id="landing">
       <div class="centered">
@@ -15,7 +15,7 @@
           <div class="row text-center">
             <div class="col-md-4 col-md-offset-4">
               <div class="col-md-8 col-md-offset-2">
-               <a href="#carousel" class="btn btn-start btn-block">Get Started</a>
+               <a href="#carousel" class="btn btn-start btn-block" v-on:click="myGovDataAPI('70f568d2-85a4-4926-ab7a-e28c7728b6c0','Train'); myGovDataAPI('e1c20915-ab7c-4bf9-bbbd-0197bbc7b98c', 'Bus'); myGovDataAPI('a9e3c103-8310-41c0-abbf-c4e1adb35aa4', 'Concession');">Get Started</a>
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@
             </div>
           </div>
 
-          <div class="container" v-if="newProfile.roomOccupancy">
+          <div class="container" v-if="newProfile.stayingOnCampus=='true' && newProfile.roomOccupancy">
             <div class="row">
               <h3>Will your room be equiped with an air conditioner</h3>
             </div>
@@ -169,7 +169,7 @@
             </div>
           </div>
 
-          <div class="container" v-if="newProfile.roomAirCon">
+          <div class="container" v-if="newProfile.stayingOnCampus=='true' && newProfile.roomAirCon">
             <div class="row">
               <h3>Select your hall</h3>
             </div>
@@ -228,28 +228,31 @@
             </div>
             <div class="row col-md-10 col-md-offset-1">
               <div class="col-md-4 col-md-offset-4">
-                <input type="text" id="home" placeholder="Enter Postal Code" v-model="newProfile.home" style="color:#21374B; background-color: #eee;">
+                <input type="text" id="home" placeholder="Enter Postal Code" v-model="newProfile.home" style="margin-top: 4px; color:#21374B; background-color: #eee;">
+              </div>
+              <div class="col-md-2">
+                <a href="#carousel" class="btn btn-submit btn-block" style="margin-left: -55px; margin-top: 0px;" v-on:click="myOneMapSearchAPI(newProfile.home, 'home');">Set</a>
               </div>
             </div>
           </div>
 
-          <div class="container" v-if="newProfile.home">
+          <div class="container" v-if="newProfile.homeLatLong">
             <div class="row">
               <h3>What will be your usual mode of transport from home?</h3>
             </div>
             <div class="row col-md-10 col-md-offset-1">
-              <div class="col-md-4">
+              <div class="col-md-4 col-md-offset-2">
                 <div class="col-md-12 btn btn-option" v-bind:class="{active: newProfile.transport=='public'}">
                   <input type="radio" id="public" value="public" v-model="newProfile.transport">
                   <label for="public">Public Transport</label>  
                 </div>
               </div>
-              <div class="col-md-4">
+              <!-- <div class="col-md-4">
                 <div class="col-md-12 btn btn-option" v-bind:class="{active: newProfile.transport=='taxi'}">
                   <input type="radio" id="taxi" value="taxi" v-model="newProfile.transport">
                   <label for="taxi">Taxi</label>
                 </div>
-              </div>
+              </div> -->
               <div class="col-md-4">
                 <div class="col-md-12 btn btn-option" v-bind:class="{active: newProfile.transport=='personal'}">
                   <input type="radio" id="personal" value="personal" v-model="newProfile.transport">
@@ -293,25 +296,25 @@
             </div>
           </div>
 
-          <div class="container" v-if="newProfile.stayingOnCampusWeekends=='true' || (newProfile.transport=='public' && newProfile.concession) || newProfile.transport=='taxi' || newProfile.transport=='personal'">
+          <div class="container" v-if="newProfile.stayingOnCampus=='true' && newProfile.stayingOnCampusWeekends=='true' || (newProfile.transport=='public' && newProfile.concession) || newProfile.transport=='taxi' || newProfile.transport=='personal'">
             <div class="row col-md-10 col-md-offset-1">
               <hr>
-              <a href="#carousel" data-slide="next" class="col-md-4 col-md-offset-4 btn btn-submit" v-on:click="myOneMapSearchAPI(newProfile.home, 'home');">Next</a>
+              <a href="#carousel" data-slide="next" class="col-md-4 col-md-offset-4 btn btn-submit" v-on:click="myOneMapRouteAPI();">Next</a>
             </div>
           </div>
 
         </div>
 
-        <div class="item" v-if="newProfile.stayingOnCampusWeekends || newProfile.home">
+        <div class="item" v-if="(show_restart=='true') || (newProfile.stayingOnCampusWeekends || newProfile.home)">
 
-          <div class="container">
+          <div class="container" v-if="show_restart=='false'">
             <div class="row">
               <h1>Food</h1>
               <hr>
             </div>
           </div>
 
-          <div class="container" style="margin-top: 0px;">
+          <div class="container" v-if="show_restart=='false'" style="margin-top: 0px;">
             <div class="row">
               <h3>Select your dietary preference</h3>
             </div>
@@ -348,10 +351,16 @@
             </div>
           </div>
           
-          <div class="container" v-if="newProfile.meal">
+          <div class="container" v-if="(newProfile.home && newProfile.foodAtHome) || (newProfile.home==null && newProfile.meal)">
             <div class="row col-md-10 col-md-offset-1">
               <hr>
-              <a href="#result" class="col-md-4 col-md-offset-4 btn btn-submit" v-if="newProfile.meal" v-on:click="calculateFinancialBreakdown(); show_chart='0'">Submit</a>
+              <a href="#result" class="col-md-4 col-md-offset-4 btn btn-submit" v-if="newProfile.meal" v-on:click="myOneMapRouteAPI(); calculateFinancialBreakdown(); show_chart='0'">Submit</a>
+            </div>
+          </div>
+
+          <div class="container" v-if="show_restart=='true'">
+            <div class="row col-md-10 col-md-offset-1">
+              <a href="#carousel" data-slide="next" class="col-md-4 col-md-offset-4 btn btn-submit" v-on:click="show_restart='false';">Restart</a>
             </div>
           </div>
 
@@ -360,14 +369,16 @@
       </div>
 
       <!-- Left and right controls -->
-      <!-- <a class="left carousel-control" href="#carousel" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" href="#carousel" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        <span class="sr-only">Next</span>
-      </a> -->
+      <!-- <div v-if="show_compare">
+        <a class="left carousel-control" href="#carousel" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div> -->
     
     </div>
     
@@ -385,30 +396,13 @@
             </div>
           </div>
           <div class="row">
-            <a class="btn btn-submit" v-on:click="oldFinancialBreakdown=financialBreakdown; show_compare='true';">Compare</a>
+            <a href="#carousel" class="btn btn-submit" v-on:click="compareProfiles()">Compare</a>
           </div>
-          {{newProfile}}
-          <hr>
-          {{financialBreakdown}}
-          <hr>
-          {{oldFinancialBreakdown}}
-          <hr>
-          {{show_chart}}
         </div>
         <div class="col-md-8">
           <bar-chart :legend="true" v-if="show_chart && !(show_compare)" :data="[financialBreakdown[show_chart]]"></bar-chart>
           <bar-chart :legend="true" v-else-if="show_chart && show_compare" :data="[financialBreakdown[show_chart], oldFinancialBreakdown[show_chart]]"></bar-chart>
         </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="row">
-        <a class="btn btn-submit" v-on:click="myOneMapSearchAPI(newProfile.university, 'university'); myOneMapSearchAPI(newProfile.home, 'home'); myOneMapRouteAPI();">GO</a>
-        <a class="btn btn-submit" v-on:click="myGovDataAPI('70f568d2-85a4-4926-ab7a-e28c7728b6c0','Train')">API</a>
-      </div>
-      <div class="row">
-        {{faresTrainData}}
       </div>
     </div>
 
@@ -470,6 +464,7 @@ export default {
       oldFinancialBreakdown : null,
       show_chart : null,
       show_compare : null,
+      show_restart : 'false',
     }
   },
 
@@ -541,10 +536,11 @@ export default {
       }
 
       let transportCost = [0,0,0,0];
-      let concessionCost = 0;
+      let concessionCost = [0,0,0,0];
       if (this.newProfile.home && this.newProfile.transport=='public') { 
         if (this.newProfile.concession!='none') {
-          concessionCost = this.concessionData[this.newProfile.concession+'_price'];
+          concessionCost[2] = Number(this.concessionData[this.newProfile.concession+'_price']);
+          concessionCost[3] = concessionCost[2]*5;
         }
           
         let dist_bus = 0;
@@ -558,88 +554,94 @@ export default {
           }
         }
         
-        dist_train /= 1000;
         let trainCost = 0;
-        if (0 < dist_train <= 3.2) {
-          if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
-            trainCost = Number(this.faresTrainData[0]["student_card_fare_per_ride"]);
+        if(dist_train>0) {
+          dist_train /= 1000;
+          if (dist_train <= 3.2) {
+            console.log(dist_train, "is less than 3.2")
+            if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
+              trainCost = Number(this.faresTrainData[0]["student_card_fare_per_ride"]);
+            }
+            else {
+              trainCost = Number(this.faresTrainData[0]["single_trip_ticket_fare_per_ride"]);
+            }
+          }
+          else if (dist_train > 40.2) {
+            console.log(dist_train, "is greater that 40.2")
+            if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
+              trainCost = Number(this.faresTrainData[this.faresTrainData.length-1]["student_card_fare_per_ride"]);
+            }
+            else {
+              trainCost = Number(this.faresTrainData[this.faresTrainData.length-1]["single_trip_ticket_fare_per_ride"]);
+            }
           }
           else {
-            trainCost = Number(this.faresTrainData[0]["single_trip_ticket_fare_per_ride"]);
-          }
-        }
-        else if (dist_train > 40.2) {
-          if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
-            trainCost = Number(this.faresTrainData[this.faresTrainData.length-1]["student_card_fare_per_ride"]);
-          }
-          else {
-            trainCost = Number(this.faresTrainData[this.faresTrainData.length-1]["single_trip_ticket_fare_per_ride"]);
-          }
-        }
-        else {
             for (let i=1; i<this.faresTrainData.length-1; i++) {
-            let start = Number(faresTrainData[i]['distance'].slice(0, faresTrainData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
-            let end = Number(faresTrainData[i]['distance'].slice(faresTrainData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
-            if (start <= dist_train <= end) {
-              if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
-                trainCost = Number(this.faresTrainData[i]["student_card_fare_per_ride"]);
+              let start = Number(this.faresTrainData[i]['distance'].slice(0, this.faresTrainData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
+              let end = Number(this.faresTrainData[i]['distance'].slice(this.faresTrainData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
+              if (start <= dist_train && dist_train <= end) {
+                if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
+                  trainCost = Number(this.faresTrainData[i]["student_card_fare_per_ride"]);
+                }
+                else {
+                  trainCost = Number(this.faresTrainData[i]["single_trip_ticket_fare_per_ride"]);
+                }
+                break;
               }
-              else {
-                trainCost = Number(this.faresTrainData[i]["single_trip_ticket_fare_per_ride"]);
-              }
-              break;
             }
           }
         }
 
-        dist_bus /= 1000;
         let busCost = 0;
-        if (0 < dist_bus <= 3.2) {
-          if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
-            busCost = Number(this.faresBusData[0]["student_card_fare_per_ride"]);
+        if(dist_bus>0){
+          dist_bus /= 1000;
+          if (0 < dist_bus <= 3.2) {
+            if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
+              busCost = Number(this.faresBusData[0]["student_card_fare_per_ride"]);
+            }
+            else {
+              busCost = Number(this.faresBusData[0]["single_trip_ticket_fare_per_ride"]);
+            }
+          }
+          else if (dist_bus > 40.2) {
+           if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
+              busCost = Number(this.faresBusData[this.faresBusData.length-1]["student_card_fare_per_ride"]);
+            }
+            else {
+              busCost = Number(this.faresBusData[this.faresBusData.length-1]["single_trip_ticket_fare_per_ride"]);
+            } 
           }
           else {
-            busCost = Number(this.faresBusData[0]["single_trip_ticket_fare_per_ride"]);
-          }
-        }
-        else if (dist_bus > 40.2) {
-         if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
-            busCost = Number(this.faresBusData[this.faresBusData.length-1]["student_card_fare_per_ride"]);
-          }
-          else {
-            busCost = Number(this.faresBusData[this.faresBusData.length-1]["single_trip_ticket_fare_per_ride"]);
-          } 
-        }
-        else {
-          for (let i=0; i<this.faresBusData.length; i++) {
-            let start = Number(faresBusData[i]['distance'].slice(0, faresBusData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
-            let end = Number(faresBusData[i]['distance'].slice(faresBusData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
-            if (start <= dist_bus <= end) {
-              if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
-                busCost = Number(this.faresBusData[i]["student_card_fare_per_ride"]);
+            for (let i=0; i<this.faresBusData.length; i++) {
+              let start = Number(this.faresBusData[i]['distance'].slice(0, this.faresBusData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
+              let end = Number(this.faresBusData[i]['distance'].slice(this.faresBusData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
+              if (start <= dist_bus && dist_bus <= end) {
+                if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
+                  busCost = Number(this.faresBusData[i]["student_card_fare_per_ride"]);
+                }
+                else {
+                  busCost = Number(this.faresBusData[i]["single_trip_ticket_fare_per_ride"]);
+                }
+                break;
               }
-              else {
-                busCost = Number(this.faresBusData[i]["single_trip_ticket_fare_per_ride"]);
-              }
-              break;
             }
           }
         }
 
-        if (!this.newProfile.stayingOnCampus) {
+        if (this.newProfile.stayingOnCampus=='false') {
           transportCost[0] = (busCost/100 + trainCost/100)*2;
           transportCost[1] = transportCost[0]*5;
         }
-        else if (!this.newProfile.stayingOnCampusWeekends) {
+        else if (this.newProfile.stayingOnCampusWeekends=='false') {
           transportCost[0] = 0;
           transportCost[1] = (busCost/100 + trainCost/100)*2;
         }
-        transportCost[2] = transportCost[1]*(30.5/7) + concessionCost;
+        transportCost[2] = transportCost[1]*(30.5/7);
         transportCost[3] = transportCost[2]*5;
       }
 
       let breakfastCost = [0,0,0,0];
-      if (this.newProfile.meal!=null && !(this.newProfile.home=='true' && this.newProfile.foodAtHome=='true')) {
+      if (this.newProfile.meal!=null && !(this.newProfile.home && this.newProfile.foodAtHome=='true')) {
         breakfastCost[0] = this.newProfile.meal.breakfast;
         if (!this.newProfile.stayingOnCampusWeekends) {
           breakfastCost[1] = breakfastCost[0]*5;
@@ -665,7 +667,7 @@ export default {
       }
 
       let dinnerCost = [0,0,0,0];
-      if (this.newProfile.meal!=null && !(this.newProfile.home=='true' && this.newProfile.foodAtHome=='true')) {
+      if (this.newProfile.meal!=null && !(this.newProfile.home && this.newProfile.foodAtHome=='true')) {
         dinnerCost[0] = this.newProfile.meal.dinner;
         if (!this.newProfile.stayingOnCampusWeekends) {
           dinnerCost[1] = dinnerCost[0]*5;
@@ -679,18 +681,57 @@ export default {
       
       this.financialBreakdown = []
       for (let i=0; i<4; i++) {
-        this.financialBreakdown[i] = {
-          name : this.newProfile.university,
-          data : {
-            "Tuition Fee" : tuitionFee[i],
-            "Hall Rent" : hallRent[i],
-            "Transport Cost" : transportCost[i],
-            "Breakfast" : breakfastCost[i],
-            "Lunch" : lunchCost[i],
-            "Dinner" : dinnerCost[i]
+        if (i<2) {
+          this.financialBreakdown[i] = {
+            name : this.newProfile.university,
+            data : {
+              //"Tuition Fee" : tuitionFee[i],
+              //"Hall Rent" : hallRent[i],
+              "Transport Cost" : transportCost[i],
+              "Breakfast" : breakfastCost[i],
+              "Lunch" : lunchCost[i],
+              "Dinner" : dinnerCost[i]
+            }
           }
         }
+
+        else if (i==2) {
+          this.financialBreakdown[i] = {
+            name : this.newProfile.university,
+            data : {
+              // "Tuition Fee" : tuitionFee[i],
+              "Hall Rent" : hallRent[i],
+              "Transport Cost" : transportCost[i],
+              "Concession Cost" : concessionCost[i],
+              "Breakfast" : breakfastCost[i],
+              "Lunch" : lunchCost[i],
+              "Dinner" : dinnerCost[i]
+            }
+          }  
+        }
+
+        else if (i==3) {
+          this.financialBreakdown[i] = {
+            name : this.newProfile.university,
+            data : {
+              "Tuition Fee" : tuitionFee[i],
+              "Hall Rent" : hallRent[i],
+              "Transport Cost" : transportCost[i],
+              "Concession Cost" : concessionCost[i],
+              "Breakfast" : breakfastCost[i],
+              "Lunch" : lunchCost[i],
+              "Dinner" : dinnerCost[i]
+            }
+          }  
+        }
       }
+    },
+
+    compareProfiles: function() {
+      this.newProfile = {};
+      this.oldFinancialBreakdown = this.financialBreakdown; 
+      this.show_compare = 'true';
+      this.show_restart = 'true';
     }
   },
 

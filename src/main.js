@@ -7,6 +7,9 @@ import Chartkick from 'chartkick'
 import VueChartkick from 'vue-chartkick'
 import Chart from 'chart.js'
 
+var vueSmoothScroll = require('vue-smoothscroll');
+Vue.use(vueSmoothScroll);
+
 Vue.config.productionTip = false
 
 Vue.use(VueFire)
