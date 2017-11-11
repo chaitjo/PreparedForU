@@ -1,5 +1,6 @@
 <template>
-  <div id="app" v-smoothscroll="{ duration : 500, callback: callback , context : undefined }">
+  <div id="app"> 
+    <!-- v-smoothscroll="{ duration : 500, callback: callback , context : undefined }"> -->
 
     <div id="landing">
       <div class="centered">
@@ -231,12 +232,12 @@
                 <input type="text" id="home" placeholder="Enter Postal Code" v-model="newProfile.home" style="margin-top: 4px; color:#21374B; background-color: #eee;">
               </div>
               <div class="col-md-2">
-                <a href="#carousel" class="btn btn-submit btn-block" style="margin-left: -55px; margin-top: 0px;" v-on:click="myOneMapSearchAPI(newProfile.home, 'home');">Set</a>
+                <a href="#carousel" class="btn btn-submit btn-block" style="margin-left: -55px; margin-top: 0px; margin-bottom: 0px;" v-on:click="myOneMapSearchAPI(newProfile.home, 'home');">Set</a>
               </div>
             </div>
           </div>
 
-          <div class="container" v-if="newProfile.homeLatLong">
+          <div class="container" v-if="newProfile.stayingOnCampusWeekends=='false' && newProfile.homeLatLong">
             <div class="row">
               <h3>What will be your usual mode of transport from home?</h3>
             </div>
@@ -247,12 +248,6 @@
                   <label for="public">Public Transport</label>  
                 </div>
               </div>
-              <!-- <div class="col-md-4">
-                <div class="col-md-12 btn btn-option" v-bind:class="{active: newProfile.transport=='taxi'}">
-                  <input type="radio" id="taxi" value="taxi" v-model="newProfile.transport">
-                  <label for="taxi">Taxi</label>
-                </div>
-              </div> -->
               <div class="col-md-4">
                 <div class="col-md-12 btn btn-option" v-bind:class="{active: newProfile.transport=='personal'}">
                   <input type="radio" id="personal" value="personal" v-model="newProfile.transport">
@@ -262,7 +257,7 @@
             </div>
           </div>
 
-          <div class="container" v-if="newProfile.home && newProfile.transport=='public'">
+          <div class="container" v-if="newProfile.stayingOnCampusWeekends=='false' && newProfile.home && newProfile.transport=='public'">
             <div class="row">
               <h3>Select your concession card type</h3>
             </div>
@@ -331,7 +326,7 @@
             </div>
           </div>
 
-          <div class="container" v-if="newProfile.meal && newProfile.home">
+          <div class="container" v-if="newProfile.meal && newProfile.home && newProfile.stayingOnCampus=='false'">
             <div class="row">
               <h3>Will you usually be having breakfast/dinner on campus or at home?</h3>
             </div>
@@ -351,16 +346,16 @@
             </div>
           </div>
           
-          <div class="container" v-if="(newProfile.home && newProfile.foodAtHome) || (newProfile.home==null && newProfile.meal)">
+          <div class="container" v-if="(newProfile.home && newProfile.foodAtHome) || (newProfile.stayingOnCampusWeekends=='false' && newProfile.meal) || (newProfile.home==null && newProfile.meal)">
             <div class="row col-md-10 col-md-offset-1">
               <hr>
-              <a href="#result" class="col-md-4 col-md-offset-4 btn btn-submit" v-if="newProfile.meal" v-on:click="myOneMapRouteAPI(); calculateFinancialBreakdown(); show_chart='0'">Submit</a>
+              <a href="#result" class="col-md-4 col-md-offset-4 btn btn-submit" v-if="newProfile.meal" v-on:click="show_chart='0'; myOneMapRouteAPI(); calculateFinancialBreakdown();">Submit</a>
             </div>
           </div>
 
           <div class="container" v-if="show_restart=='true'">
-            <div class="row col-md-10 col-md-offset-1">
-              <a href="#carousel" data-slide="next" class="col-md-4 col-md-offset-4 btn btn-submit" v-on:click="show_restart='false';">Restart</a>
+            <div class="row col-md-4 col-md-offset-4">
+              <a href="#carousel" data-slide="next" class="col-md-8 col-md-offset-2 btn btn-start" v-on:click="show_restart='false';">Re-enter Responses</a>
             </div>
           </div>
 
@@ -382,27 +377,27 @@
     
     </div>
     
-    <div id="result" class="container text-center">
+    <div id="result" class="container text-center"> <!-- v-if="financialBreakdown"> --> 
       <div class="row">
-        <div class="col-md-4">
-          <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-              <select class="form-control" v-model="show_chart">
-                <option value="0">Daily</option>
-                <option value="1">Weekly</option>
-                <option value="2">Monthly</option>
-                <option value="3">Semesterly</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <a href="#carousel" class="btn btn-submit" v-on:click="compareProfiles()">Compare</a>
-          </div>
+        <div class="col-md-3 col-md-offset-1">
+            <select class="form-control" v-model="show_chart">
+              <option value="0" selected>Daily</option>
+              <option value="1">Weekly</option>
+              <option value="2">Monthly</option>
+              <option value="3">Semesterly</option>
+            </select>
         </div>
-        <div class="col-md-8">
-          <bar-chart :legend="true" v-if="show_chart && !(show_compare)" :data="[financialBreakdown[show_chart]]"></bar-chart>
-          <bar-chart :legend="true" v-else-if="show_chart && show_compare" :data="[financialBreakdown[show_chart], oldFinancialBreakdown[show_chart]]"></bar-chart>
+        <h1 v-if="!(show_compare)">, You'll be spending S$ {{totalSpending[show_chart].toFixed(2)}}</h1>
+        <h1 v-if="show_compare">, You'll be spending S$ {{totalSpending[show_chart].toFixed(2)}} vs {{oldTotalSpending[show_chart].toFixed(2)}}</h1>
+      </div>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <bar-chart :legend="true" legend="bottom" v-if="show_chart && !(show_compare)" :data="[financialBreakdown[show_chart]]"></bar-chart>
+          <bar-chart :legend="true" legend="bottom" v-else-if="show_chart && show_compare" :data="[financialBreakdown[show_chart], oldFinancialBreakdown[show_chart]]"></bar-chart>
         </div>
+      </div>
+      <div class="row col-md-4 col-md-offset-4">
+        <a href="#carousel" class="btn btn-compare col-md-8 col-md-offset-2" v-on:click="compareProfiles()">Compare</a>
       </div>
     </div>
 
@@ -460,6 +455,8 @@ export default {
       concessionData : null,
       faresTrainData : null,
       faresBusData : null,
+      totalSpending : [],
+      oldTotalSpending : null,
       financialBreakdown : null,
       oldFinancialBreakdown : null,
       show_chart : null,
@@ -472,6 +469,7 @@ export default {
 
     myGovDataAPI: function (resource_id, modifier) {
       let url = "https://data.gov.sg/api/action/datastore_search?resource_id=" + resource_id;
+      console.log(url);
       axios.get(url).then((response) => {
         if (modifier=='Train') {
           this.faresTrainData = response.data.result.records;
@@ -490,6 +488,7 @@ export default {
 
     myOneMapSearchAPI: function (searchText, modifier) {
       let url = "https://developers.onemap.sg/commonapi/search?searchVal=" + searchText + "&returnGeom=Y&getAddrDetails=N&pageNum=1";
+      console.log(url);
       axios.get(url).then((response) => {
         if (modifier=='university') {
           this.newProfile.universityLatLong = response.data.results[0].LATITUDE + ',' + response.data.results[0].LONGITUDE;
@@ -519,9 +518,11 @@ export default {
     },
 
     calculateFinancialBreakdown: function() {
+      this.totalSpending = [];
+
       let tuitionFee = [0, 0, 0, 0];
       if (this.newProfile.course!=null) {
-        tuitionFee[3] = this.newProfile.course.fee;
+        tuitionFee[3] = Number(this.newProfile.course.fee);
         tuitionFee[0] = tuitionFee[3]/(30.5*5);
         tuitionFee[1] = tuitionFee[3]/((30.5*5/7));
         tuitionFee[2] = tuitionFee[3]/5;
@@ -529,7 +530,7 @@ export default {
 
       let hallRent = [0, 0, 0, 0];
       if (this.newProfile.hall!=null) {
-        hallRent[2] = this.newProfile.hall.rent;
+        hallRent[2] = Number(this.newProfile.hall.rent);
         hallRent[0] = hallRent[2]/30.5;
         hallRent[1] = hallRent[2]/(30.5/7);
         hallRent[3] = hallRent[2]*5;
@@ -642,7 +643,7 @@ export default {
 
       let breakfastCost = [0,0,0,0];
       if (this.newProfile.meal!=null && !(this.newProfile.home && this.newProfile.foodAtHome=='true')) {
-        breakfastCost[0] = this.newProfile.meal.breakfast;
+        breakfastCost[0] = Number(this.newProfile.meal.breakfast);
         if (!this.newProfile.stayingOnCampusWeekends) {
           breakfastCost[1] = breakfastCost[0]*5;
         }
@@ -655,7 +656,7 @@ export default {
       
       let lunchCost = [0,0,0,0];
       if (this.newProfile.meal!=null) {
-        lunchCost[0] = this.newProfile.meal.lunch;
+        lunchCost[0] = Number(this.newProfile.meal.lunch);
         if (!this.newProfile.stayingOnCampusWeekends) {
           lunchCost[1] = lunchCost[0]*5;
         }
@@ -668,7 +669,7 @@ export default {
 
       let dinnerCost = [0,0,0,0];
       if (this.newProfile.meal!=null && !(this.newProfile.home && this.newProfile.foodAtHome=='true')) {
-        dinnerCost[0] = this.newProfile.meal.dinner;
+        dinnerCost[0] = Number(this.newProfile.meal.dinner);
         if (!this.newProfile.stayingOnCampusWeekends) {
           dinnerCost[1] = dinnerCost[0]*5;
         }
@@ -724,12 +725,18 @@ export default {
             }
           }  
         }
+
+        this.totalSpending[i] = 0;
+        for (var key in this.financialBreakdown[i]["data"]) {
+          this.totalSpending[i] += this.financialBreakdown[i]["data"][key];
+        } 
       }
     },
 
     compareProfiles: function() {
       this.newProfile = {};
-      this.oldFinancialBreakdown = this.financialBreakdown; 
+      this.oldFinancialBreakdown = this.financialBreakdown;
+      this.oldTotalSpending = this.totalSpending; 
       this.show_compare = 'true';
       this.show_restart = 'true';
     }
@@ -849,6 +856,21 @@ body {
     border-color: #4A89AA;
 }
 
+#result select {
+  margin-top: 9px; 
+  font-size: 36px; 
+  height: 65px; 
+  text-align-last:center;
+}
+
+#result h1 {
+  text-align: left;
+}
+
+#result .row {
+  margin-top: 50px;
+}
+
 [type='radio'] {
   visibility: hidden;
   width: 0;
@@ -919,6 +941,25 @@ label {
   color: #eee;
   background-color: #4A89AA;
   border-color: #4A89AA;
+}
+
+.btn-compare {
+  color: #21374B;
+  background-color: transparent;
+  border-color: #21374B;
+  border-width: 2px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.btn-compare:hover,
+.btn-compare:focus,
+.btn-compare.focus,
+.btn-compare:active,
+.btn-compare.active {
+  color: #fff;
+  background-color: #21374B;
+  border-color: #21374B;  
 }
 
 </style>
