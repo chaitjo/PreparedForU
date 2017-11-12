@@ -1,6 +1,6 @@
 # PreparedForU
 
-A simple Vue.js webapp for university aspirants and students in Singapore to estimate and visualize their spending on tuition, rent, transport and living based on publically available data.
+A simple Vue.js webapp for university aspirants and students in Singapore to estimate and visualize their spending on tuition, rent, transport and living based on publicly available data.
 
 ## Build Setup
 
