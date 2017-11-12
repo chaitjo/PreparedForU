@@ -1,6 +1,6 @@
-# cz2006
+# PreparedForU
 
-> A Vue.js project
+A simple Vue.js webapp for university aspirants and students in Singapore to estimate and visualize their spending on tuition, rent, transport and living based on publically available data.
 
 ## Build Setup
 
