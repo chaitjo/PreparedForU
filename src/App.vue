@@ -10,7 +10,7 @@
           </div>
           <div class="row">
             <div class="col-md-8 col-md-offset-2">
-              <p>A simple tool for university aspirants and students in Singapore to estimate and visualize their spending on tuition, rent, transport and living based on publically available data.</p>
+              <p>A simple tool for university aspirants and students in Singapore to estimate and visualize their spending on tuition, rent, transport and living based on publicaly available data.</p>
             </div>            
           </div>
           <div class="row text-center">
@@ -237,7 +237,7 @@
             </div>
           </div>
 
-          <div class="container" v-if="newProfile.stayingOnCampusWeekends=='false' && newProfile.homeLatLong">
+          <div class="container" v-if="(newProfile.stayingOnCampusWeekends=='false' || !(newProfile.stayingOnCampusWeekends)) && newProfile.homeLatLong">
             <div class="row">
               <h3>What will be your usual mode of transport from home?</h3>
             </div>
@@ -257,7 +257,7 @@
             </div>
           </div>
 
-          <div class="container" v-if="newProfile.stayingOnCampusWeekends=='false' && newProfile.home && newProfile.transport=='public'">
+          <div class="container" v-if="(newProfile.stayingOnCampusWeekends=='false' || !(newProfile.stayingOnCampusWeekends)) && newProfile.home && newProfile.transport=='public'">
             <div class="row">
               <h3>Select your concession card type</h3>
             </div>
@@ -377,7 +377,7 @@
     
     </div>
     
-    <div id="result" class="container text-center"> <!-- v-if="financialBreakdown"> --> 
+    <div id="result" class="container text-center" v-if="financialBreakdown"> 
       <div class="row">
         <div class="col-md-3 col-md-offset-1">
             <select class="form-control" v-model="show_chart">
@@ -387,8 +387,8 @@
               <option value="3">Semesterly</option>
             </select>
         </div>
-        <h1 v-if="!(show_compare)">, You'll be spending S$ {{totalSpending[show_chart].toFixed(2)}}</h1>
-        <h1 v-if="show_compare">, You'll be spending S$ {{totalSpending[show_chart].toFixed(2)}} vs {{oldTotalSpending[show_chart].toFixed(2)}}</h1>
+        <h1 v-if="!(show_compare)">, You'll be spending S$ {{totalSpending[show_chart].toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</h1>
+        <h1 v-if="show_compare">, You'll be spending S$ {{totalSpending[show_chart].toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} vs {{oldTotalSpending[show_chart].toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</h1>
       </div>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
