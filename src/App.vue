@@ -1,6 +1,5 @@
 <template>
-  <div id="app"> 
-    <!-- v-smoothscroll="{ duration : 500, callback: callback , context : undefined }"> -->
+  <div id="app" v-smoothscroll="{ duration : 500, callback: callback , context : undefined }">
 
     <div id="landing">
       <div class="centered">
@@ -16,7 +15,7 @@
           <div class="row text-center">
             <div class="col-md-4 col-md-offset-4">
               <div class="col-md-8 col-md-offset-2">
-               <a href="#carousel" class="btn btn-start btn-block" v-on:click="myGovDataAPI('70f568d2-85a4-4926-ab7a-e28c7728b6c0','Train'); myGovDataAPI('e1c20915-ab7c-4bf9-bbbd-0197bbc7b98c', 'Bus'); myGovDataAPI('a9e3c103-8310-41c0-abbf-c4e1adb35aa4', 'Concession');">Get Started</a>
+               <a href="#carousel" class="btn btn-start btn-block">Get Started</a>
               </div>
             </div>
           </div>
@@ -188,7 +187,7 @@
           <div class="container" v-if="newProfile.stayingOnCampus=='false' || newProfile.hall">
             <div class="row col-md-10 col-md-offset-1">
               <hr>
-              <a href="#carousel" data-slide="next" class="col-md-4 col-md-offset-4 btn btn-submit">Next</a>
+              <a href="#carousel" data-slide="next" class="col-md-4 col-md-offset-4 btn btn-submit" v-on:click="myGovDataAPI('70f568d2-85a4-4926-ab7a-e28c7728b6c0','Train'); myGovDataAPI('e1c20915-ab7c-4bf9-bbbd-0197bbc7b98c', 'Bus'); myGovDataAPI('a9e3c103-8310-41c0-abbf-c4e1adb35aa4', 'Concession');">Next</a>
             </div>
           </div>
 
@@ -377,27 +376,29 @@
     
     </div>
     
-    <div id="result" class="container text-center" v-if="financialBreakdown"> 
-      <div class="row">
-        <div class="col-md-3 col-md-offset-1">
-            <select class="form-control" v-model="show_chart">
-              <option value="0" selected>Daily</option>
-              <option value="1">Weekly</option>
-              <option value="2">Monthly</option>
-              <option value="3">Semesterly</option>
-            </select>
+    <div id="result"> 
+      <div class="container text-center" v-if="show_chart"> 
+        <div class="row">
+          <div class="col-md-3 col-md-offset-1">
+              <select class="form-control" v-model="show_chart">
+                <option value="0" selected>Daily</option>
+                <option value="1">Weekly</option>
+                <option value="2">Monthly</option>
+                <option value="3">Semesterly</option>
+              </select>
+          </div>
+          <h1 v-if="!(show_compare)">, You'll be spending S$ <span style="color: #3366cc; font-weight: 700">{{totalSpending[show_chart].toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</span></h1>
+          <h1 v-if="show_compare">, You'll be spending S$ <span style="color: #3366cc; font-weight: 700;">{{totalSpending[show_chart].toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</span> vs <span style="color: #dc3912; font-weight: 700">{{oldTotalSpending[show_chart].toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</span></h1>
         </div>
-        <h1 v-if="!(show_compare)">, You'll be spending S$ {{totalSpending[show_chart].toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</h1>
-        <h1 v-if="show_compare">, You'll be spending S$ {{totalSpending[show_chart].toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} vs {{oldTotalSpending[show_chart].toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</h1>
-      </div>
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-          <bar-chart :legend="true" legend="bottom" v-if="show_chart && !(show_compare)" :data="[financialBreakdown[show_chart]]"></bar-chart>
-          <bar-chart :legend="true" legend="bottom" v-else-if="show_chart && show_compare" :data="[financialBreakdown[show_chart], oldFinancialBreakdown[show_chart]]"></bar-chart>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <bar-chart :legend="true" legend="bottom" v-if="show_chart && !(show_compare)" :data="[financialBreakdown[show_chart]]"></bar-chart>
+            <bar-chart :legend="true" legend="bottom" v-else-if="show_chart && show_compare" :data="[financialBreakdown[show_chart], oldFinancialBreakdown[show_chart]]"></bar-chart>
+          </div>
         </div>
-      </div>
-      <div class="row col-md-4 col-md-offset-4">
-        <a href="#carousel" class="btn btn-compare col-md-8 col-md-offset-2" v-on:click="compareProfiles()">Compare</a>
+        <div class="row col-md-4 col-md-offset-4">
+          <a href="#carousel" class="btn btn-compare col-md-8 col-md-offset-2" v-on:click="compareProfiles()">Compare</a>
+        </div>
       </div>
     </div>
 
@@ -506,7 +507,7 @@ export default {
       let start = this.newProfile.homeLatLong;
       let end = this.newProfile.universityLatLong;
       let routeType = 'pt';
-      let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEwODMsInVzZXJfaWQiOjEwODMsImVtYWlsIjoiY2tqb3NoaTlAZ21haWwuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cL29tMi5kZmUub25lbWFwLnNnXC9hcGlcL3YyXC91c2VyXC9zZXNzaW9uIiwiaWF0IjoxNTEwMTYxOTQwLCJleHAiOjE1MTA1OTM5NDAsIm5iZiI6MTUxMDE2MTk0MCwianRpIjoiNjExYWExNjA5MTNiM2M0ZTUwN2MwNzI3MWU4MDU5MTIifQ.Xs6SNtd_5udG_v2cRsVMdwJEPB7sf9vyr2u92sPPoYY';
+      let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEwODMsInVzZXJfaWQiOjEwODMsImVtYWlsIjoiY2tqb3NoaTlAZ21haWwuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cL29tMi5kZmUub25lbWFwLnNnXC9hcGlcL3YyXC91c2VyXC9zZXNzaW9uIiwiaWF0IjoxNTEwNTM4MDk3LCJleHAiOjE1MTA5NzAwOTcsIm5iZiI6MTUxMDUzODA5NywianRpIjoiNGUwNzkzMzk0ZTE5NzIwM2M1NTFhMDE4MTM0ZGU4NDUifQ.W3vFyZwylJLOFzohfCpOBEAqjLM0jCRJ7E30gAtdeow';
       let date = '2017-11-07';
       let time = '10:00:00';
       let mode = 'TRANSIT';
@@ -522,7 +523,7 @@ export default {
 
       let tuitionFee = [0, 0, 0, 0];
       if (this.newProfile.course!=null) {
-        tuitionFee[3] = Number(this.newProfile.course.fee);
+        tuitionFee[3] = Number(this.newProfile.course.fee)/2;
         tuitionFee[0] = tuitionFee[3]/(30.5*5);
         tuitionFee[1] = tuitionFee[3]/((30.5*5/7));
         tuitionFee[2] = tuitionFee[3]/5;
@@ -554,6 +555,8 @@ export default {
             dist_train += this.newProfile.route.legs[i].distance;
           }
         }
+
+        console.log(dist_bus, dist_train)
         
         let trainCost = 0;
         if(dist_train>0) {
@@ -561,19 +564,19 @@ export default {
           if (dist_train <= 3.2) {
             console.log(dist_train, "is less than 3.2")
             if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
-              trainCost = Number(this.faresTrainData[0]["student_card_fare_per_ride"]);
+              trainCost = 0;
             }
             else {
-              trainCost = Number(this.faresTrainData[0]["single_trip_ticket_fare_per_ride"]);
+              trainCost = Number(this.faresTrainData[0]["adult_card_fare_per_ride"]);
             }
           }
           else if (dist_train > 40.2) {
             console.log(dist_train, "is greater that 40.2")
             if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
-              trainCost = Number(this.faresTrainData[this.faresTrainData.length-1]["student_card_fare_per_ride"]);
+              trainCost = 0;
             }
             else {
-              trainCost = Number(this.faresTrainData[this.faresTrainData.length-1]["single_trip_ticket_fare_per_ride"]);
+              trainCost = Number(this.faresTrainData[this.faresTrainData.length-1]["adult_card_fare_per_ride"]);
             }
           }
           else {
@@ -582,10 +585,10 @@ export default {
               let end = Number(this.faresTrainData[i]['distance'].slice(this.faresTrainData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
               if (start <= dist_train && dist_train <= end) {
                 if (this.newProfile.concession=='train' || this.newProfile.concession=='hybrid') {
-                  trainCost = Number(this.faresTrainData[i]["student_card_fare_per_ride"]);
+                  trainCost = 0;
                 }
                 else {
-                  trainCost = Number(this.faresTrainData[i]["single_trip_ticket_fare_per_ride"]);
+                  trainCost = Number(this.faresTrainData[i]["adult_card_fare_per_ride"]);
                 }
                 break;
               }
@@ -598,18 +601,18 @@ export default {
           dist_bus /= 1000;
           if (0 < dist_bus <= 3.2) {
             if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
-              busCost = Number(this.faresBusData[0]["student_card_fare_per_ride"]);
+              busCost = 0;
             }
             else {
-              busCost = Number(this.faresBusData[0]["single_trip_ticket_fare_per_ride"]);
+              busCost = Number(this.faresBusData[0]["adult_card_fare_per_ride"]);
             }
           }
           else if (dist_bus > 40.2) {
            if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
-              busCost = Number(this.faresBusData[this.faresBusData.length-1]["student_card_fare_per_ride"]);
+              busCost = 0;
             }
             else {
-              busCost = Number(this.faresBusData[this.faresBusData.length-1]["single_trip_ticket_fare_per_ride"]);
+              busCost = Number(this.faresBusData[this.faresBusData.length-1]["adult_card_fare_per_ride"]);
             } 
           }
           else {
@@ -618,10 +621,10 @@ export default {
               let end = Number(this.faresBusData[i]['distance'].slice(this.faresBusData[i]['distance'].indexOf('-')).replace(/[^0-9\.]+/g,""));
               if (start <= dist_bus && dist_bus <= end) {
                 if (this.newProfile.concession=='bus' || this.newProfile.concession=='hybrid') {
-                  busCost = Number(this.faresBusData[i]["student_card_fare_per_ride"]);
+                  busCost = 0;
                 }
                 else {
-                  busCost = Number(this.faresBusData[i]["single_trip_ticket_fare_per_ride"]);
+                  busCost = Number(this.faresBusData[i]["adult_card_fare_per_ride"]);
                 }
                 break;
               }
@@ -644,7 +647,7 @@ export default {
       let breakfastCost = [0,0,0,0];
       if (this.newProfile.meal!=null && !(this.newProfile.home && this.newProfile.foodAtHome=='true')) {
         breakfastCost[0] = Number(this.newProfile.meal.breakfast);
-        if (!this.newProfile.stayingOnCampusWeekends) {
+        if (this.newProfile.stayingOnCampusWeekends=='false' || this.newProfile.stayingOnCampus=='false') {
           breakfastCost[1] = breakfastCost[0]*5;
         }
         else {
@@ -657,7 +660,7 @@ export default {
       let lunchCost = [0,0,0,0];
       if (this.newProfile.meal!=null) {
         lunchCost[0] = Number(this.newProfile.meal.lunch);
-        if (!this.newProfile.stayingOnCampusWeekends) {
+        if (this.newProfile.stayingOnCampusWeekends=='false' || this.newProfile.stayingOnCampus=='false') {
           lunchCost[1] = lunchCost[0]*5;
         }
         else {
@@ -670,7 +673,7 @@ export default {
       let dinnerCost = [0,0,0,0];
       if (this.newProfile.meal!=null && !(this.newProfile.home && this.newProfile.foodAtHome=='true')) {
         dinnerCost[0] = Number(this.newProfile.meal.dinner);
-        if (!this.newProfile.stayingOnCampusWeekends) {
+        if (this.newProfile.stayingOnCampusWeekends=='false' || this.newProfile.stayingOnCampus=='false') {
           dinnerCost[1] = dinnerCost[0]*5;
         }
         else {
@@ -856,11 +859,14 @@ body {
     border-color: #4A89AA;
 }
 
+select {
+  text-align-last:center;
+}
+
 #result select {
   margin-top: 9px; 
   font-size: 36px; 
   height: 65px; 
-  text-align-last:center;
 }
 
 #result h1 {
