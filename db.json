@@ -1,1252 +1,1038 @@
 {
-  "profiles" : 
-  {
-    "default" : 
-    {
-      "University" : null,
-      "Hall" : null,
-      "Food" : null
-    }
-  },
-
-  "universities" : 
-  {
-    "NTU" : 
-    {
-      "value" : "NTU",
-      "fullName" : "Nanyang Technological University"
-    },
-    "NUS" : 
-    {
-      "value" : "NUS",
-      "fullName" : "National University of Singapore"
-    },
-    "SMU" :
-    {
-      "value" : "SMU",
-      "fullName" : "Singapore Management University"
-    }
-  },
-
-  "citizenships" :
-  {
-    "SC" : 
-    {
-      "citizenship" : "Singaporean",
-      "value" : "SC"
-    },
-    "PR" :
-    {
-      "citizenship" : "Singaporean Permanent Resident (PR)",
-      "value" : "PR"
-    },
-    "IS" :
-    {
+  "citizenships" : {
+    "IS" : {
       "citizenship" : "International",
       "value" : "IS"
+    },
+    "PR" : {
+      "citizenship" : "Singaporean Permanent Resident",
+      "value" : "PR"
+    },
+    "SC" : {
+      "citizenship" : "Singaporean",
+      "value" : "SC"
     }
   },
-
-  "courses" :
-  [
-    {
-      "university":"NTU",
-      "course":"Computer Science",
-      "citizenship":"SC",
-      "fee":"8050"
-    },
-    {
-      "university":"NTU",
-      "course":"Computer Science",
-      "citizenship":"PR",
-      "fee":"11250"
-    },
-    {
-      "university":"NTU",
-      "course":"Computer Science",
-      "citizenship":"IS",
-      "fee":"17100"
-    },
-    {
-      "university":"NTU",
-      "course":"Computer Engineering",
-      "citizenship":"SC",
-      "fee":"8050"
-    },
-    {
-      "university":"NTU",
-      "course":"Computer Engineering",
-      "citizenship":"PR",
-      "fee":"11250"
-    },
-    {
-      "university":"NTU",
-      "course":"Computer Engineering",
-      "citizenship":"IS",
-      "fee":"17100"
-    },
-    {
-      "university":"NTU",
-      "course":"Economics",
-      "citizenship":"SC",
-      "fee":"8050"
-    },
-    {
-      "university":"NTU",
-      "course":"Economics",
-      "citizenship":"PR",
-      "fee":"11250"
-    },
-    {
-      "university":"NTU",
-      "course":"Economics",
-      "citizenship":"IS",
-      "fee":"17100"
-    },
-    {
-      "university":"NTU",
-      "course":"Aerospace Engineering",
-      "citizenship":"SC",
-      "fee":"8050"
-    },
-    {
-      "university":"NTU",
-      "course":"Aerospace Engineering",
-      "citizenship":"PR",
-      "fee":"11250"
-    },
-    {
-      "university":"NTU",
-      "course":"Aerospace Engineering",
-      "citizenship":"IS",
-      "fee":"17100"
-    },
-    {
-      "university":"NTU",
-      "course":"Communication Studies",
-      "citizenship":"SC",
-      "fee":"8050"
-    },
-    {
-      "university":"NTU",
-      "course":"Communication Studies",
-      "citizenship":"PR",
-      "fee":"11250"
-    },
-    {
-      "university":"NTU",
-      "course":"Communication Studies",
-      "citizenship":"IS",
-      "fee":"17100"
-    },
-    {
-      "university":"NTU",
-      "course":"Sociology",
-      "citizenship":"SC",
-      "fee":"8050"
-    },
-    {
-      "university":"NTU",
-      "course":"Sociology",
-      "citizenship":"PR",
-      "fee":"11250"
-    },
-    {
-      "university":"NTU",
-      "course":"Sociology",
-      "citizenship":"IS",
-      "fee":"17100"
-    },
-    {
-      "university":"NTU",
-      "course":"Bioengineering",
-      "citizenship":"SC",
-      "fee":"8050"
-    },
-    {
-      "university":"NTU",
-      "course":"Bioengineering",
-      "citizenship":"PR",
-      "fee":"11250"
-    },
-    {
-      "university":"NTU",
-      "course":"Bioengineering",
-      "citizenship":"IS",
-      "fee":"17100"
-    },
-    {
-      "university":"NTU",
-      "course":"English",
-      "citizenship":"SC",
-      "fee":"8050"
-    },
-    {
-      "university":"NTU",
-      "course":"English",
-      "citizenship":"PR",
-      "fee":"11250"
-    },
-    {
-      "university":"NTU",
-      "course":"English",
-      "citizenship":"IS",
-      "fee":"17100"
-    },
-    {
-      "university":"NTU",
-      "course":"Civil Engineering",
-      "citizenship":"SC",
-      "fee":"8050"
-    },
-    {
-      "university":"NTU",
-      "course":"Civil Engineering",
-      "citizenship":"PR",
-      "fee":"11250"
-    },
-    {
-      "university":"NTU",
-      "course":"Civil Engineering",
-      "citizenship":"IS",
-      "fee":"17100"
-    },
-    {
-      "university":"NTU",
-      "course":"Electrical & Electronic Engineering",
-      "citizenship":"SC",
-      "fee":"8050"
-    },
-    {
-      "university":"NTU",
-      "course":"Electrical & Electronic Engineering",
-      "citizenship":"PR",
-      "fee":"11250"
-    },
-    {
-      "university":"NTU",
-      "course":"Electrical & Electronic Engineering",
-      "citizenship":"IS",
-      "fee":"17100"
-    },
-    {
-      "university":"NTU",
-      "course":"Business",
-      "citizenship":"SC",
-      "fee":"9250"
-    },
-    {
-      "university":"NTU",
-      "course":"Business",
-      "citizenship":"PR",
-      "fee":"12950"
-    },
-    {
-      "university":"NTU",
-      "course":"Business",
-      "citizenship":"IS",
-      "fee":"19700"
-    },
-    {
-      "university":"NTU",
-      "course":"Accountancy",
-      "citizenship":"SC",
-      "fee":"9250"
-    },
-    {
-      "university":"NTU",
-      "course":"Accountancy",
-      "citizenship":"PR",
-      "fee":"12950"
-    },
-    {
-      "university":"NTU",
-      "course":"Accountancy",
-      "citizenship":"IS",
-      "fee":"19700"
-    },
-    {
-      "university":"NTU",
-      "course":"Accountancy & Business",
-      "citizenship":"SC",
-      "fee":"9250"
-    },
-    {
-      "university":"NTU",
-      "course":"Accountancy & Business",
-      "citizenship":"PR",
-      "fee":"12950"
-    },
-    {
-      "university":"NTU",
-      "course":"Accountancy & Business",
-      "citizenship":"IS",
-      "fee":"19700"
-    },
-    {
-      "university":"NTU",
-      "course":"Business & Computing",
-      "citizenship":"SC",
-      "fee":"9250"
-    },
-    {
-      "university":"NTU",
-      "course":"Business & Computing",
-      "citizenship":"PR",
-      "fee":"12950"
-    },
-    {
-      "university":"NTU",
-      "course":"Business & Computing",
-      "citizenship":"IS",
-      "fee":"19700"
-    },
-    {
-      "university":"NTU",
-      "course":"Business & Computer Engineering",
-      "citizenship":"SC",
-      "fee":"9250"
-    },
-    {
-      "university":"NTU",
-      "course":"Business & Computer Engineering",
-      "citizenship":"PR",
-      "fee":"12950"
-    },
-    {
-      "university":"NTU",
-      "course":"Business & Computer Engineering",
-      "citizenship":"IS",
-      "fee":"19700"
-    },
-    {
-      "university":"NTU",
-      "course":"Renaissance Engineering",
-      "citizenship":"SC",
-      "fee":"17500"
-    },
-    {
-      "university":"NTU",
-      "course":"Renaissance Engineering",
-      "citizenship":"PR",
-      "fee":"24500"
-    },
-    {
-      "university":"NTU",
-      "course":"Renaissance Engineering",
-      "citizenship":"IS",
-      "fee":"37350"
-    },
-    {
-      "university":"NTU",
-      "course":"Medicine",
-      "citizenship":"SC",
-      "fee":"33200"
-    },
-    {
-      "university":"NTU",
-      "course":"Medicine",
-      "citizenship":"PR",
-      "fee":"46500"
-    },
-    {
-      "university":"NTU",
-      "course":"Medicine",
-      "citizenship":"IS",
-      "fee":"70500"
-    },
-    {
-      "university":"NUS",
-      "course":"Arts and Social Sciences",
-      "citizenship":"SC",
-      "fee":"8150"
-    },
-    {
-      "university":"NUS",
-      "course":"Arts and Social Sciences",
-      "citizenship":"PR",
-      "fee":"11400"
-    },
-    {
-      "university":"NUS",
-      "course":"Arts and Social Sciences",
-      "citizenship":"IS",
-      "fee":"17450"
-    },
-    {
-      "university":"NUS",
-      "course":"Business",
-      "citizenship":"SC",
-      "fee":"9550"
-    },
-    {
-      "university":"NUS",
-      "course":"Business",
-      "citizenship":"PR",
-      "fee":"13350"
-    },
-    {
-      "university":"NUS",
-      "course":"Business",
-      "citizenship":"IS",
-      "fee":"20450"
-    },
-    {
-      "university":"NUS",
-      "course":"Computing",
-      "citizenship":"SC",
-      "fee":"8150"
-    },
-    {
-      "university":"NUS",
-      "course":"Computing",
-      "citizenship":"PR",
-      "fee":"11400"
-    },
-    {
-      "university":"NUS",
-      "course":"Computing",
-      "citizenship":"IS",
-      "fee":"17450"
-    },
-    {
-      "university":"NUS",
-      "course":"Dentistry",
-      "citizenship":"SC",
-      "fee":"27400"
-    },
-    {
-      "university":"NUS",
-      "course":"Dentistry",
-      "citizenship":"PR",
-      "fee":"38350"
-    },
-    {
-      "university":"NUS",
-      "course":"Dentistry",
-      "citizenship":"IS",
-      "fee":"58650"
-    },
-    {
-      "university":"NUS",
-      "course":"Design and Environment (Architecture)",
-      "citizenship":"SC",
-      "fee":"8800"
-    },
-    {
-      "university":"NUS",
-      "course":"Design and Environment (Architecture)",
-      "citizenship":"PR",
-      "fee":"12300"
-    },
-    {
-      "university":"NUS",
-      "course":"Design and Environment (Architecture)",
-      "citizenship":"IS",
-      "fee":"18850"
-    },
-    {
-      "university":"NUS",
-      "course":"Design and Environment (Building, Real Estate)",
-      "citizenship":"SC",
-      "fee":"8150"
-    },
-    {
-      "university":"NUS",
-      "course":"Design and Environment (Building, Real Estate)",
-      "citizenship":"PR",
-      "fee":"11400"
-    },
-    {
-      "university":"NUS",
-      "course":"Design and Environment (Building, Real Estate)",
-      "citizenship":"IS",
-      "fee":"17450"
-    },
-    {
-      "university":"NUS",
-      "course":"Design and Environment (Industrial Design)",
-      "citizenship":"SC",
-      "fee":"8150"
-    },
-    {
-      "university":"NUS",
-      "course":"Design and Environment (Industrial Design)",
-      "citizenship":"PR",
-      "fee":"11400"
-    },
-    {
-      "university":"NUS",
-      "course":"Design and Environment (Industrial Design)",
-      "citizenship":"IS",
-      "fee":"17450"
-    },
-    {
-      "university":"NUS",
-      "course":"Engineering",
-      "citizenship":"SC",
-      "fee":"8150"
-    },
-    {
-      "university":"NUS",
-      "course":"Engineering",
-      "citizenship":"PR",
-      "fee":"11400"
-    },
-    {
-      "university":"NUS",
-      "course":"Engineering",
-      "citizenship":"IS",
-      "fee":"17450"
-    },
-    {
-      "university":"NUS",
-      "course":"Law",
-      "citizenship":"SC",
-      "fee":"12600"
-    },
-    {
-      "university":"NUS",
-      "course":"Law",
-      "citizenship":"PR",
-      "fee":"17650"
-    },
-    {
-      "university":"NUS",
-      "course":"Law",
-      "citizenship":"IS",
-      "fee":"26950"
-    },
-    {
-      "university":"NUS",
-      "course":"Medicine (Nursing)",
-      "citizenship":"SC",
-      "fee":"8950"
-    },
-    {
-      "university":"NUS",
-      "course":"Medicine (Nursing)",
-      "citizenship":"PR",
-      "fee":"12550"
-    },
-    {
-      "university":"NUS",
-      "course":"Medicine (Nursing)",
-      "citizenship":"IS",
-      "fee":"19150"
-    },
-    {
-      "university":"NUS",
-      "course":"Medicine",
-      "citizenship":"SC",
-      "fee":"27400"
-    },
-    {
-      "university":"NUS",
-      "course":"Medicine",
-      "citizenship":"PR",
-      "fee":"38350"
-    },
-    {
-      "university":"NUS",
-      "course":"Medicine",
-      "citizenship":"IS",
-      "fee":"58650"
-    },
-    {
-      "university":"NUS",
-      "course":"Music",
-      "citizenship":"SC",
-      "fee":"12950"
-    },
-    {
-      "university":"NUS",
-      "course":"Music",
-      "citizenship":"PR",
-      "fee":"18150"
-    },
-    {
-      "university":"NUS",
-      "course":"Music",
-      "citizenship":"IS",
-      "fee":"27700"
-    },
-    {
-      "university":"NUS",
-      "course":"Science (Pharmacy)",
-      "citizenship":"SC",
-      "fee":"9000"
-    },
-    {
-      "university":"NUS",
-      "course":"Science (Pharmacy)",
-      "citizenship":"PR",
-      "fee":"12600"
-    },
-    {
-      "university":"NUS",
-      "course":"Science (Pharmacy)",
-      "citizenship":"IS",
-      "fee":"19250"
-    },
-    {
-      "university":"NUS",
-      "course":"Science",
-      "citizenship":"SC",
-      "fee":"8150"
-    },
-    {
-      "university":"NUS",
-      "course":"Science",
-      "citizenship":"PR",
-      "fee":"11400"
-    },
-    {
-      "university":"NUS",
-      "course":"Science",
-      "citizenship":"IS",
-      "fee":"17450"
-    },
-    {
-      "university":"SMU",
-      "course":"Accountancy",
-      "citizenship":"SC",
-      "fee":"11400"
-    },
-    {
-      "university":"SMU",
-      "course":"Accountancy",
-      "citizenship":"PR",
-      "fee":"15950"
-    },
-    {
-      "university":"SMU",
-      "course":"Accountancy",
-      "citizenship":"IS",
-      "fee":"24400"
-    },
-    {
-      "university":"SMU",
-      "course":"Business Management",
-      "citizenship":"SC",
-      "fee":"11400"
-    },
-    {
-      "university":"SMU",
-      "course":"Business Management",
-      "citizenship":"PR",
-      "fee":"15950"
-    },
-    {
-      "university":"SMU",
-      "course":"Business Management",
-      "citizenship":"IS",
-      "fee":"24400"
-    },
-    {
-      "university":"SMU",
-      "course":"Economics",
-      "citizenship":"SC",
-      "fee":"11400"
-    },
-    {
-      "university":"SMU",
-      "course":"Economics",
-      "citizenship":"PR",
-      "fee":"15950"
-    },
-    {
-      "university":"SMU",
-      "course":"Economics",
-      "citizenship":"IS",
-      "fee":"24400"
-    },
-    {
-      "university":"SMU",
-      "course":"Information Systems",
-      "citizenship":"SC",
-      "fee":"11400"
-    },
-    {
-      "university":"SMU",
-      "course":"Information Systems",
-      "citizenship":"PR",
-      "fee":"15950"
-    },
-    {
-      "university":"SMU",
-      "course":"Information Systems",
-      "citizenship":"IS",
-      "fee":"24400"
-    },
-    {
-      "university":"SMU",
-      "course":"Social Science",
-      "citizenship":"SC",
-      "fee":"11400"
-    },
-    {
-      "university":"SMU",
-      "course":"Social Science",
-      "citizenship":"PR",
-      "fee":"15950"
-    },
-    {
-      "university":"SMU",
-      "course":"Social Science",
-      "citizenship":"IS",
-      "fee":"24400"
-    },
-    {
-      "university":"SMU",
-      "course":"Law",
-      "citizenship":"SC",
-      "fee":"12600"
-    },
-    {
-      "university":"SMU",
-      "course":"Law",
-      "citizenship":"PR",
-      "fee":"17650"
-    },
-    {
-      "university":"SMU",
-      "course":"Law",
-      "citizenship":"IS",
-      "fee":"26950"
+  "courses" : [ {
+    "citizenship" : "SC",
+    "course" : "Computer Science",
+    "fee" : "8050",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Computer Science",
+    "fee" : "11250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Computer Science",
+    "fee" : "17100",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Computer Engineering",
+    "fee" : "8050",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Computer Engineering",
+    "fee" : "11250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Computer Engineering",
+    "fee" : "17100",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Economics",
+    "fee" : "8050",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Economics",
+    "fee" : "11250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Economics",
+    "fee" : "17100",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Aerospace Engineering",
+    "fee" : "8050",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Aerospace Engineering",
+    "fee" : "11250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Aerospace Engineering",
+    "fee" : "17100",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Communication Studies",
+    "fee" : "8050",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Communication Studies",
+    "fee" : "11250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Communication Studies",
+    "fee" : "17100",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Sociology",
+    "fee" : "8050",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Sociology",
+    "fee" : "11250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Sociology",
+    "fee" : "17100",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Bioengineering",
+    "fee" : "8050",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Bioengineering",
+    "fee" : "11250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Bioengineering",
+    "fee" : "17100",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "English",
+    "fee" : "8050",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "English",
+    "fee" : "11250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "English",
+    "fee" : "17100",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Civil Engineering",
+    "fee" : "8050",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Civil Engineering",
+    "fee" : "11250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Civil Engineering",
+    "fee" : "17100",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Electrical & Electronic Engineering",
+    "fee" : "8050",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Electrical & Electronic Engineering",
+    "fee" : "11250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Electrical & Electronic Engineering",
+    "fee" : "17100",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Business",
+    "fee" : "9250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Business",
+    "fee" : "12950",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Business",
+    "fee" : "19700",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Accountancy",
+    "fee" : "9250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Accountancy",
+    "fee" : "12950",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Accountancy",
+    "fee" : "19700",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Accountancy & Business",
+    "fee" : "9250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Accountancy & Business",
+    "fee" : "12950",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Accountancy & Business",
+    "fee" : "19700",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Business & Computing",
+    "fee" : "9250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Business & Computing",
+    "fee" : "12950",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Business & Computing",
+    "fee" : "19700",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Business & Computer Engineering",
+    "fee" : "9250",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Business & Computer Engineering",
+    "fee" : "12950",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Business & Computer Engineering",
+    "fee" : "19700",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Renaissance Engineering",
+    "fee" : "17500",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Renaissance Engineering",
+    "fee" : "24500",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Renaissance Engineering",
+    "fee" : "37350",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Medicine",
+    "fee" : "33200",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Medicine",
+    "fee" : "46500",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Medicine",
+    "fee" : "70500",
+    "university" : "NTU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Arts and Social Sciences",
+    "fee" : "8150",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Arts and Social Sciences",
+    "fee" : "11400",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Arts and Social Sciences",
+    "fee" : "17450",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Business",
+    "fee" : "9550",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Business",
+    "fee" : "13350",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Business",
+    "fee" : "20450",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Computing",
+    "fee" : "8150",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Computing",
+    "fee" : "11400",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Computing",
+    "fee" : "17450",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Dentistry",
+    "fee" : "27400",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Dentistry",
+    "fee" : "38350",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Dentistry",
+    "fee" : "58650",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Design and Environment (Architecture)",
+    "fee" : "8800",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Design and Environment (Architecture)",
+    "fee" : "12300",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Design and Environment (Architecture)",
+    "fee" : "18850",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Design and Environment (Building, Real Estate)",
+    "fee" : "8150",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Design and Environment (Building, Real Estate)",
+    "fee" : "11400",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Design and Environment (Building, Real Estate)",
+    "fee" : "17450",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Design and Environment (Industrial Design)",
+    "fee" : "8150",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Design and Environment (Industrial Design)",
+    "fee" : "11400",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Design and Environment (Industrial Design)",
+    "fee" : "17450",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Engineering",
+    "fee" : "8150",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Engineering",
+    "fee" : "11400",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Engineering",
+    "fee" : "17450",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Law",
+    "fee" : "12600",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Law",
+    "fee" : "17650",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Law",
+    "fee" : "26950",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Medicine (Nursing)",
+    "fee" : "8950",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Medicine (Nursing)",
+    "fee" : "12550",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Medicine (Nursing)",
+    "fee" : "19150",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Medicine",
+    "fee" : "27400",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Medicine",
+    "fee" : "38350",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Medicine",
+    "fee" : "58650",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Music",
+    "fee" : "12950",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Music",
+    "fee" : "18150",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Music",
+    "fee" : "27700",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Science (Pharmacy)",
+    "fee" : "9000",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Science (Pharmacy)",
+    "fee" : "12600",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Science (Pharmacy)",
+    "fee" : "19250",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Science",
+    "fee" : "8150",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Science",
+    "fee" : "11400",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Science",
+    "fee" : "17450",
+    "university" : "NUS"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Accountancy",
+    "fee" : "11400",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Accountancy",
+    "fee" : "15950",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Accountancy",
+    "fee" : "24400",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Business Management",
+    "fee" : "11400",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Business Management",
+    "fee" : "15950",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Business Management",
+    "fee" : "24400",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Economics",
+    "fee" : "11400",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Economics",
+    "fee" : "15950",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Economics",
+    "fee" : "24400",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Information Systems",
+    "fee" : "11400",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Information Systems",
+    "fee" : "15950",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Information Systems",
+    "fee" : "24400",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Social Science",
+    "fee" : "11400",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Social Science",
+    "fee" : "15950",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Social Science",
+    "fee" : "24400",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "SC",
+    "course" : "Law",
+    "fee" : "12600",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "PR",
+    "course" : "Law",
+    "fee" : "17650",
+    "university" : "SMU"
+  }, {
+    "citizenship" : "IS",
+    "course" : "Law",
+    "fee" : "26950",
+    "university" : "SMU"
+  } ],
+  "halls" : [ {
+    "airCon" : "No",
+    "hall" : "One",
+    "occupancy" : "Single",
+    "rent" : "370",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "One",
+    "occupancy" : "Double",
+    "rent" : "250",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Two",
+    "occupancy" : "Single",
+    "rent" : "370",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Two",
+    "occupancy" : "Double",
+    "rent" : "250",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Three",
+    "occupancy" : "Single",
+    "rent" : "405",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Three",
+    "occupancy" : "Double",
+    "rent" : "300",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Four",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Four",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Five",
+    "occupancy" : "Single",
+    "rent" : "410",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Five",
+    "occupancy" : "Double",
+    "rent" : "310",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Six",
+    "occupancy" : "Single",
+    "rent" : "380",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Six",
+    "occupancy" : "Double",
+    "rent" : "270",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Seven",
+    "occupancy" : "Single",
+    "rent" : "350",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Seven",
+    "occupancy" : "Double",
+    "rent" : "250",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Eight",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Eight",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Nine",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Nine",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Ten",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Ten",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Eleven",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Eleven",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Twelve",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Twelve",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Thirteen",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Thirteen",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Fourteen",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Fourteen",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Fifteen",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Fifteen",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Sixteen",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Sixteen",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Cresent",
+    "occupancy" : "Single",
+    "rent" : "435",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Cresent",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Cresent",
+    "occupancy" : "Double",
+    "rent" : "325",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Cresent",
+    "occupancy" : "Double",
+    "rent" : "285",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Pioneer",
+    "occupancy" : "Single",
+    "rent" : "435",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Pioneer",
+    "occupancy" : "Single",
+    "rent" : "395",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Pioneer",
+    "occupancy" : "Double",
+    "rent" : "325",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Pioneer",
+    "occupancy" : "Double",
+    "rent" : "285",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Binjai",
+    "occupancy" : "Single",
+    "rent" : "435",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Binjai",
+    "occupancy" : "Single",
+    "rent" : "400",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Binjai",
+    "occupancy" : "Double",
+    "rent" : "325",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Binjai",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Tanjong",
+    "occupancy" : "Single",
+    "rent" : "435",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Tanjong",
+    "occupancy" : "Single",
+    "rent" : "400",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Tanjong",
+    "occupancy" : "Double",
+    "rent" : "325",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Tanjong",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Banyan",
+    "occupancy" : "Single",
+    "rent" : "435",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Banyan",
+    "occupancy" : "Single",
+    "rent" : "400",
+    "university" : "NTU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Banyan",
+    "occupancy" : "Double",
+    "rent" : "325",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Banyan",
+    "occupancy" : "Double",
+    "rent" : "290",
+    "university" : "NTU"
+  }, {
+    "airCon" : "No",
+    "hall" : "Eusoff",
+    "occupancy" : "Single",
+    "rent" : "460",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "Eusoff",
+    "occupancy" : "Double",
+    "rent" : "320",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "Kent Ridge",
+    "occupancy" : "Single",
+    "rent" : "460",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "King Edward VII",
+    "occupancy" : "Single",
+    "rent" : "460",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "King Edward VII",
+    "occupancy" : "Double",
+    "rent" : "320",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "Raffles",
+    "occupancy" : "Single",
+    "rent" : "460",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "Raffles",
+    "occupancy" : "Double",
+    "rent" : "320",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "Sheares",
+    "occupancy" : "Single",
+    "rent" : "460",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "Temasek",
+    "occupancy" : "Single",
+    "rent" : "460",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "Temasek",
+    "occupancy" : "Double",
+    "rent" : "320",
+    "university" : "NUS"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Prince George",
+    "occupancy" : "Single",
+    "rent" : "840",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "Prince George",
+    "occupancy" : "Single",
+    "rent" : "500",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "Prince George",
+    "occupancy" : "Single",
+    "rent" : "460",
+    "university" : "NUS"
+  }, {
+    "airCon" : "No",
+    "hall" : "UTown",
+    "occupancy" : "Single",
+    "rent" : "560",
+    "university" : "NUS"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "UTown",
+    "occupancy" : "Single",
+    "rent" : "620",
+    "university" : "NUS"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Prinsep",
+    "occupancy" : "Single",
+    "rent" : "643",
+    "university" : "SMU"
+  }, {
+    "airCon" : "Yes",
+    "hall" : "Prinsep",
+    "occupancy" : "Double",
+    "rent" : "536",
+    "university" : "SMU"
+  } ],
+  "meals" : [ {
+    "breakfast" : "1.5",
+    "diet" : "Vegetarian or Vegan",
+    "dinner" : "4",
+    "lunch" : "4",
+    "university" : "NTU"
+  }, {
+    "breakfast" : "1.5",
+    "diet" : "Non-Vegetarian",
+    "dinner" : "5",
+    "lunch" : "5",
+    "university" : "NTU"
+  }, {
+    "breakfast" : "1.5",
+    "diet" : "Vegetarian or Vegan",
+    "dinner" : "4",
+    "lunch" : "4",
+    "university" : "NUS"
+  }, {
+    "breakfast" : "1.5",
+    "diet" : "Non-Vegetarian",
+    "dinner" : "5",
+    "lunch" : "5",
+    "university" : "NUS"
+  }, {
+    "breakfast" : "2",
+    "diet" : "Vegetarian or Vegan",
+    "dinner" : "5",
+    "lunch" : "5",
+    "university" : "SMU"
+  }, {
+    "breakfast" : "2",
+    "diet" : "Non-Vegetarian",
+    "dinner" : "6",
+    "lunch" : "6",
+    "university" : "SMU"
+  } ],
+  "universities" : {
+    "NTU" : {
+      "fullName" : "Nanyang Technological University",
+      "value" : "NTU"
+    },
+    "NUS" : {
+      "fullName" : "National University of Singapore",
+      "value" : "NUS"
+    },
+    "SMU" : {
+      "fullName" : "Singapore Management University",
+      "value" : "SMU"
     }
-  ],
-
-  "halls" :
-  [
-    {
-      "university":"NTU",
-      "hall":"One",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"370"
-    },
-    {
-      "university":"NTU",
-      "hall":"One",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"250"
-    },
-    {
-      "university":"NTU",
-      "hall":"Two",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"370"
-    },
-    {
-      "university":"NTU",
-      "hall":"Two",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"250"
-    },
-    {
-      "university":"NTU",
-      "hall":"Three",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"405"
-    },
-    {
-      "university":"NTU",
-      "hall":"Three",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"300"
-    },
-    {
-      "university":"NTU",
-      "hall":"Four",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Four",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Five",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"410"
-    },
-    {
-      "university":"NTU",
-      "hall":"Five",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"310"
-    },
-    {
-      "university":"NTU",
-      "hall":"Six",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"380"
-    },
-    {
-      "university":"NTU",
-      "hall":"Six",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"270"
-    },
-    {
-      "university":"NTU",
-      "hall":"Seven",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"350"
-    },
-    {
-      "university":"NTU",
-      "hall":"Seven",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"250"
-    },
-    {
-      "university":"NTU",
-      "hall":"Eight",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Eight",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Nine",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Nine",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Ten",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Ten",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Eleven",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Eleven",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Twelve",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Twelve",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Thirteen",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Thirteen",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Fourteen",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Fourteen",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Fifteen",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Fifteen",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Sixteen",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Sixteen",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Cresent",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"435"
-    },
-    {
-      "university":"NTU",
-      "hall":"Cresent",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Cresent",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"325"
-    },
-    {
-      "university":"NTU",
-      "hall":"Cresent",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"285"
-    },
-    {
-      "university":"NTU",
-      "hall":"Pioneer",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"435"
-    },
-    {
-      "university":"NTU",
-      "hall":"Pioneer",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"395"
-    },
-    {
-      "university":"NTU",
-      "hall":"Pioneer",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"325"
-    },
-    {
-      "university":"NTU",
-      "hall":"Pioneer",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"285"
-    },
-    {
-      "university":"NTU",
-      "hall":"Binjai",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"435"
-    },
-    {
-      "university":"NTU",
-      "hall":"Binjai",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"400"
-    },
-    {
-      "university":"NTU",
-      "hall":"Binjai",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"325"
-    },
-    {
-      "university":"NTU",
-      "hall":"Binjai",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Tanjong",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"435"
-    },
-    {
-      "university":"NTU",
-      "hall":"Tanjong",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"400"
-    },
-    {
-      "university":"NTU",
-      "hall":"Tanjong",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"325"
-    },
-    {
-      "university":"NTU",
-      "hall":"Tanjong",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"290"
-    },
-    {
-      "university":"NTU",
-      "hall":"Banyan",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"435"
-    },
-    {
-      "university":"NTU",
-      "hall":"Banyan",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"400"
-    },
-    {
-      "university":"NTU",
-      "hall":"Banyan",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"325"
-    },
-    {
-      "university":"NTU",
-      "hall":"Banyan",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"290"
-    },
-    {
-      "university":"NUS",
-      "hall":"Eusoff",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"460"
-    },
-    {
-      "university":"NUS",
-      "hall":"Eusoff",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"320"
-    },
-    {
-      "university":"NUS",
-      "hall":"Kent Ridge",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"460"
-    },
-    {
-      "university":"NUS",
-      "hall":"King Edward VII",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"460"
-    },
-    {
-      "university":"NUS",
-      "hall":"King Edward VII",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"320"
-    },
-    {
-      "university":"NUS",
-      "hall":"Raffles",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"460"
-    },
-    {
-      "university":"NUS",
-      "hall":"Raffles",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"320"
-    },
-    {
-      "university":"NUS",
-      "hall":"Sheares",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"460"
-    },
-    {
-      "university":"NUS",
-      "hall":"Temasek",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"460"
-    },
-    {
-      "university":"NUS",
-      "hall":"Temasek",
-      "occupancy":"Double",
-      "airCon":"No",
-      "rent":"320"
-    },
-    {
-      "university":"NUS",
-      "hall":"Prince George",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"840"
-    },
-    {
-      "university":"NUS",
-      "hall":"Prince George",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"500"
-    },
-    {
-      "university":"NUS",
-      "hall":"Prince George",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"460"
-    },
-    {
-      "university":"NUS",
-      "hall":"UTown",
-      "occupancy":"Single",
-      "airCon":"No",
-      "rent":"560"
-    },
-    {
-      "university":"NUS",
-      "hall":"UTown",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"620"
-    },
-    {
-      "university":"SMU",
-      "hall":"Prinsep",
-      "occupancy":"Single",
-      "airCon":"Yes",
-      "rent":"643"
-    },
-    {
-      "university":"SMU",
-      "hall":"Prinsep",
-      "occupancy":"Double",
-      "airCon":"Yes",
-      "rent":"536"
-    }
-  ],
-
-  "meals" :
-  [
-    {
-      "university" : "NTU",
-      "diet" : "Vegetarian or Vegan",
-      "breakfast" : "1.5",
-      "lunch" : "4",
-      "dinner" : "4"
-    },
-    {
-      "university" : "NTU",
-      "diet" : "Non-Vegetarian",
-      "breakfast" : "1.5",
-      "lunch" : "5",
-      "dinner" : "5"
-    },
-    {
-      "university" : "NUS",
-      "diet" : "Vegetarian or Vegan",
-      "breakfast" : "1.5",
-      "lunch" : "4",
-      "dinner" : "4"
-    },
-    {
-      "university" : "NUS",
-      "diet" : "Non-Vegetarian",
-      "breakfast" : "1.5",
-      "lunch" : "5",
-      "dinner" : "5"
-    },
-    {
-      "university" : "SMU",
-      "diet" : "Vegetarian or Vegan",
-      "breakfast" : "2",
-      "lunch" : "5",
-      "dinner" : "5"
-    },
-    {
-      "university" : "SMU",
-      "diet" : "Non-Vegetarian",
-      "breakfast" : "2",
-      "lunch" : "6",
-      "dinner" : "6"
-    }
-  ]
+  }
 }

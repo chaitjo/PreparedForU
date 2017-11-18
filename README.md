@@ -2,6 +2,10 @@
 
 A simple Vue.js webapp for university aspirants and students in Singapore to estimate and visualize their spending on tuition, rent, transport and living based on publicly available data.
 
+# To-do
+* Learn about Compartments in Vue and restructure code into reusable compartments.
+* Deploy with Heroku/Firebase(?)
+
 ## Build Setup
 
 ``` bash
