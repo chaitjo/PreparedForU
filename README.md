@@ -1,12 +1,22 @@
 # PreparedForU
+A simple webapp for university aspirants and students in Singapore to estimate and compare their spending on tuition, housing, transport and rent, and make financially smart decisions based on data visualization.
 
-A simple Vue.js webapp for university aspirants and students in Singapore to estimate and visualize their spending on tuition, rent, transport and living based on publicly available data.
+Built with Vue.js and Firebase. All calculations were based on publically available university data (scraped with Selenium), OneMapSG Routing API and Singapore Government Transport Fares APIs.
 
 # To-do
 * Learn about Compartments in Vue and restructure code into reusable compartments.
-* Deploy with Heroku/Firebase(?)
+* Deploy with Heroku/Firebase(?)\
+* Improve README
 
-## Build Setup
+
+# Screenshots
+
+![Landing Page](screenshots/landing_page.png)
+![Questionaire1](screenshots/q_tuition.png)
+![Questionaire2](screenshots/q_transportation.png)
+![Result](screenshots/weekly.png)
+
+# Build Setup
 
 ``` bash
 # install dependencies
