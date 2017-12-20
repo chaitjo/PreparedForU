@@ -3,6 +3,8 @@ A simple webapp for university aspirants and students in Singapore to estimate a
 
 Built with Vue.js and Firebase. All calculations were based on publically available university data (scraped with Selenium), OneMapSG Routing API and Singapore Government Transport Fares APIs.
 
+**Check out the blog post for more details: [chaitjo.github.io/preparedforu](https://chaitjo.github.io/preparedforu/)**
+
 # To-do
 * Learn about Compartments in Vue and restructure code into reusable compartments.
 * Deploy with Heroku/Firebase(?)
