@@ -5,7 +5,7 @@ Built with Vue.js and Firebase. All calculations were based on publically availa
 
 # To-do
 * Learn about Compartments in Vue and restructure code into reusable compartments.
-* Deploy with Heroku/Firebase(?)\
+* Deploy with Heroku/Firebase(?)
 * Improve README
 
 
